@@ -1,0 +1,6 @@
+{
+  "name": "FF Panel Store - Free Fire Top Up & Game Services",
+  "description": "Fast, safe, and reliable Free Fire diamonds, memberships, and game service top-up portal with user & admin panels.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

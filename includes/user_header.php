@@ -1,0 +1,156 @@
+<?php
+// User Panel Header - Exact Reference UI Match
+$settings = getSiteSettings();
+$currentUser = requireUser();
+$activeNav = $activeNav ?? 'home';
+$flash = getFlash();
+?>
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#080B11] text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($pageTitle ?? 'User Dashboard') ?> — <?= htmlspecialchars($settings['site_name'] ?? 'FF Panel Store') ?></title>
+    <link rel="stylesheet" href="/css/tailwind.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-gaming { font-family: 'Rajdhani', sans-serif; }
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0e17; }
+        ::-webkit-scrollbar-thumb { background: #1f293d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff2e51; }
+    </style>
+</head>
+<body class="min-h-full bg-[#080B11] text-slate-100 antialiased selection:bg-rose-600 selection:text-white flex flex-col">
+
+    <!-- Flash Notifications -->
+    <?php if ($flash): ?>
+        <div class="px-4 py-2.5 text-sm font-medium flex items-center justify-between <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 border-b border-emerald-500/30 text-emerald-300' : 'bg-rose-950/80 border-b border-rose-500/30 text-rose-300' ?>">
+            <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <?php if ($flash['type'] === 'success'): ?>
+                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <?php else: ?>
+                        <svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    <?php endif; ?>
+                    <span><?= htmlspecialchars($flash['message']) ?></span>
+                </div>
+                <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <!-- User Panel Top Navbar (Matches Reference Image) -->
+    <header class="bg-[#0D121F] border-b border-slate-800/80 sticky-none z-30">
+        <div class="w-full px-4 lg:px-8 py-3.5 flex flex-wrap lg:flex-nowrap items-center justify-between gap-4">
+            
+            <!-- Left: Brand Logo -->
+            <div class="flex items-center gap-6">
+                <a href="/user/dashboard.php" class="flex items-center gap-3 group shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF2E51] to-[#D91438] flex items-center justify-center shadow-lg shadow-rose-600/30 group-hover:scale-105 transition-transform duration-200">
+                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-gaming text-xl font-bold tracking-wider text-white uppercase flex items-center gap-1.5">
+                            FF PANEL <span class="text-[#FF2E51]">STORE</span>
+                        </div>
+                        <div class="text-[10px] text-slate-400 font-medium tracking-wider uppercase"><?= htmlspecialchars($settings['site_tagline'] ?? 'Fast • Safe • Reliable') ?></div>
+                    </div>
+                </a>
+
+                <!-- Search Input Bar (Reference UI) -->
+                <div class="hidden xl:block w-80 2xl:w-96">
+                    <form action="/user/services.php" method="GET" class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <input type="text" name="q" value="<?= htmlspecialchars($_GET['q'] ?? '') ?>" placeholder="Search for services (e.g. Diamond, UID, ID, etc...)" class="w-full bg-[#13192A] border border-slate-700/60 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 transition-colors">
+                    </form>
+                </div>
+            </div>
+
+            <!-- Middle: Horizontal Nav Tabs (Reference UI) -->
+            <div class="hidden lg:flex items-center gap-1 bg-[#13192A]/80 p-1 rounded-2xl border border-slate-800/80">
+                <a href="/user/dashboard.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'home' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Home
+                </a>
+                <a href="/user/services.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'services' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                    Services
+                </a>
+                <a href="/user/orders.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'orders' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    Orders
+                </a>
+                <a href="/user/uids.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'uids' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
+                    FF UIDs
+                </a>
+                <a href="/user/profile.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'profile' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    Profile
+                </a>
+            </div>
+
+            <!-- Right: Notifications, Wallet Balance & User Profile (Exact Reference UI) -->
+            <div class="flex items-center gap-3.5">
+                
+                <!-- Notification Bell with Red Badge '3' -->
+                <div class="relative">
+                    <button type="button" class="w-10 h-10 rounded-xl bg-[#13192A] border border-slate-700/60 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                    </button>
+                    <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#FF2E51] text-white text-[11px] font-bold flex items-center justify-center border-2 border-[#0D121F]">
+                        3
+                    </span>
+                </div>
+
+                <!-- Wallet Balance Card (Exact Reference UI) -->
+                <div class="flex items-center gap-3 bg-[#13192A] border border-slate-700/60 rounded-xl px-4 py-2 hover:border-rose-500/40 transition-colors">
+                    <div class="w-8 h-8 rounded-lg bg-rose-500/15 border border-rose-500/25 flex items-center justify-center text-[#FF2E51]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-white tracking-wide"><?= formatCurrency((float)$currentUser['wallet_balance']) ?></div>
+                        <div class="text-[10px] text-slate-400 font-medium">Wallet Balance</div>
+                    </div>
+                </div>
+
+                <!-- User Profile Capsule with Avatar & Dropdown (Reference UI: Aaris Ali / User) -->
+                <div class="relative group" id="userMenuDropdown">
+                    <button type="button" class="flex items-center gap-3 bg-[#13192A] border border-slate-700/60 rounded-xl px-3.5 py-1.5 hover:border-slate-600 transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#FF2E51] to-red-400 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-rose-600/20">
+                            <?= strtoupper(substr($currentUser['name'], 0, 1)) ?>
+                        </div>
+                        <div class="text-left hidden sm:block">
+                            <div class="text-xs font-bold text-white tracking-wide leading-tight"><?= htmlspecialchars($currentUser['name']) ?></div>
+                            <div class="text-[10px] text-slate-400 font-medium capitalize"><?= htmlspecialchars($currentUser['role']) ?></div>
+                        </div>
+                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <!-- Dropdown Box -->
+                    <div class="hidden group-hover:block absolute right-0 mt-1 w-48 bg-[#111728] border border-slate-700/80 rounded-xl shadow-2xl py-2 z-50">
+                        <div class="px-4 py-2 border-b border-slate-800 text-[11px] text-slate-400">
+                            Signed in as <span class="text-white font-semibold block truncate"><?= htmlspecialchars($currentUser['email']) ?></span>
+                        </div>
+                        <a href="/user/profile.php" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">My Profile</a>
+                        <a href="/user/uids.php" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">Manage FF UIDs</a>
+                        <a href="/user/orders.php" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">Order History</a>
+                        <div class="border-t border-slate-800 my-1"></div>
+                        <a href="/logout.php" class="block px-4 py-2 text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/30">Sign Out</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- App Body Container: Sidebar + Main Content -->
+    <div class="w-full flex-1 flex flex-col lg:flex-row px-4 lg:px-8 py-6 gap-6">
