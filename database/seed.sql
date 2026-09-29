@@ -57,5 +57,45 @@ INSERT INTO `site_settings` (`setting_key`, `setting_value`) VALUES
 ('announcement', 'Flash Sale: Flat 15% Bonus Diamonds on all Orders above ₹500 today!'),
 ('support_email', 'support@ffpanel.com'),
 ('support_whatsapp', '+91 98765 43210'),
-('maintenance_mode', '0')
+('maintenance_mode', '0'),
+('referral_enabled', '1'),
+('referral_commission_percent', '5.00'),
+('min_deposit_amount', '50.00'),
+('max_deposit_amount', '50000.00'),
+('instant_delivery_mode', '1')
 ON DUPLICATE KEY UPDATE `setting_value`=VALUES(`setting_value`);
+
+-- Insert Payment Gateways (UPI, Razorpay, Paytm)
+INSERT INTO `payment_gateways` (`id`, `name`, `code`, `is_enabled`, `instructions`, `api_key`, `api_secret`, `merchant_id`, `upi_id`, `qr_image_url`, `min_deposit`, `max_deposit`, `fee_percentage`) VALUES
+(1, 'Instant UPI / QR Code', 'upi_manual', 1, 'Scan QR or pay via any UPI App (GPay, PhonePe, Paytm) to the official UPI ID. Enter the 12-digit UTR / Transaction Reference Number to verify deposit.', NULL, NULL, NULL, 'ffpanel@upi', NULL, 50.00, 25000.00, 0.00),
+(2, 'Razorpay Gateway', 'razorpay', 0, 'Card, Netbanking, UPI, and Wallets via Razorpay Checkout. Set API Key & Secret in Admin Settings to activate.', NULL, NULL, NULL, NULL, NULL, 100.00, 50000.00, 2.00),
+(3, 'Paytm Payment Gateway', 'paytm', 0, 'Direct Paytm Wallet & UPI payment integration. Set Merchant ID & Key in Admin Settings to activate.', NULL, NULL, NULL, NULL, NULL, 100.00, 50000.00, 1.50)
+ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
+
+-- Insert API Providers (Garena Direct, Smile One)
+INSERT INTO `providers` (`id`, `name`, `code`, `api_url`, `api_key`, `api_secret`, `is_enabled`, `balance`, `currency`) VALUES
+(1, 'Garena Direct API Partner', 'garena_direct', 'https://api.garena-services.com/v1', NULL, NULL, 0, 0.00, 'INR'),
+(2, 'Smile One Free Fire API', 'smile_one', 'https://api.smileone.com/v1/ff', NULL, NULL, 0, 0.00, 'INR')
+ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
+
+-- Insert Discount Coupons
+INSERT INTO `coupons` (`id`, `code`, `discount_type`, `discount_value`, `min_order_amount`, `max_discount_amount`, `usage_limit`, `used_count`, `is_active`) VALUES
+(1, 'WELCOME10', 'percentage', 10.00, 100.00, NULL, 500, 0, 1),
+(2, 'FF50', 'flat', 50.00, 450.00, NULL, 200, 0, 1),
+(3, 'MEGA100', 'flat', 100.00, 800.00, NULL, 100, 0, 1)
+ON DUPLICATE KEY UPDATE `code`=VALUES(`code`);
+
+-- Insert Initial Wallet Transactions for demo user
+INSERT INTO `wallet_transactions` (`id`, `user_id`, `type`, `amount`, `balance_before`, `balance_after`, `description`, `reference_id`, `created_at`) VALUES
+(1, 2, 'credit', 1500.00, 0.00, 1500.00, 'UPI Deposit Approval (UTR: 329183019281)', 'DEP-98124', DATE_SUB(NOW(), INTERVAL 1 HOUR)),
+(2, 2, 'debit', 95.00, 1500.00, 1405.00, 'Order #FF-2026-9041 - 520 Diamonds', 'ORD-FF-2026-9041', DATE_SUB(NOW(), INTERVAL 45 MINUTE)),
+(3, 2, 'debit', 70.00, 1405.00, 1335.00, 'Order #FF-2026-9040 - Weekly Membership', 'ORD-FF-2026-9040', DATE_SUB(NOW(), INTERVAL 30 MINUTE)),
+(4, 2, 'debit', 85.00, 1335.00, 1250.00, 'Order #FF-2026-9036 - 100 Diamonds & Token', 'ORD-FF-2026-9036', DATE_SUB(NOW(), INTERVAL 10 MINUTE))
+ON DUPLICATE KEY UPDATE `description`=VALUES(`description`);
+
+-- Insert Initial Notifications for demo user
+INSERT INTO `notifications` (`id`, `user_id`, `role_target`, `title`, `message`, `type`, `is_read`, `link`, `created_at`) VALUES
+(1, 2, 'user', 'Welcome to FF Panel Store!', 'Your account has been activated. Top up diamonds instantly with 0% gateway fee today.', 'success', 1, '/services', DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(2, 2, 'user', 'Deposit Approved: ₹1,500.00', 'Your UPI deposit has been verified and added to your wallet balance.', 'success', 0, '/wallet', DATE_SUB(NOW(), INTERVAL 1 HOUR)),
+(3, 2, 'user', 'Order #FF-2026-9041 Completed', 'Your 520 Diamonds top-up for UID 2849182391 was delivered successfully.', 'success', 0, '/order-detail?id=1', DATE_SUB(NOW(), INTERVAL 45 MINUTE))
+ON DUPLICATE KEY UPDATE `title`=VALUES(`title`);
