@@ -148,12 +148,23 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
             <div class="bg-[#111728] border border-slate-800/80 rounded-2xl p-5 space-y-4">
                 <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Payment Breakdown</h4>
                 <div class="space-y-3 text-xs">
+                    <?php 
+                    $discount = (float)($order['discount_amount'] ?? 0);
+                    $paidAmount = (float)$order['amount'];
+                    $subtotal = $paidAmount + $discount;
+                    ?>
                     <div class="flex items-center justify-between pb-2 border-b border-slate-800">
-                        <span class="text-slate-400">Item Subtotal:</span>
-                        <span class="text-white"><?= formatCurrency((float)$order['amount']) ?></span>
+                        <span class="text-slate-400">Service Price:</span>
+                        <span class="text-white"><?= formatCurrency($subtotal) ?></span>
                     </div>
+                    <?php if ($discount > 0): ?>
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-800 text-emerald-400">
+                            <span>Coupon Discount Saved:</span>
+                            <span>-<?= formatCurrency($discount) ?></span>
+                        </div>
+                    <?php endif; ?>
                     <div class="flex items-center justify-between pb-2 border-b border-slate-800">
-                        <span class="text-slate-400">Taxes & Server Gateway Fees:</span>
+                        <span class="text-slate-400">Taxes & Server Fees:</span>
                         <span class="text-emerald-400 font-semibold">₹ 0.00 (Free)</span>
                     </div>
                     <div class="flex items-center justify-between pb-2 border-b border-slate-800">
@@ -161,9 +172,14 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                         <span class="text-white"><?= htmlspecialchars($order['payment_method']) ?></span>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                        <span class="text-sm font-bold text-white">Total Amount Paid:</span>
-                        <span class="text-lg font-black text-rose-400"><?= formatCurrency((float)$order['amount']) ?></span>
+                        <span class="text-sm font-bold text-white">Final Paid Amount:</span>
+                        <span class="text-lg font-black text-rose-400"><?= formatCurrency($paidAmount) ?></span>
                     </div>
+                    <?php if (!empty($order['updated_at'])): ?>
+                        <div class="text-[10px] text-slate-500 text-right pt-1">
+                            Last Updated: <?= date('d M Y, h:i A', strtotime($order['updated_at'])) ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

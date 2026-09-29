@@ -77,23 +77,31 @@ $flash = getFlash();
 
             <!-- Middle: Horizontal Nav Tabs (Reference UI) -->
             <div class="hidden lg:flex items-center gap-1 bg-[#13192A]/80 p-1 rounded-2xl border border-slate-800/80">
-                <a href="/dashboard" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'home' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/dashboard" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'home' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     Home
                 </a>
-                <a href="/services" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'services' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/services" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'services' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                     Services
                 </a>
-                <a href="/orders" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'orders' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/orders" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'orders' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                     Orders
                 </a>
-                <a href="/uids" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'uids' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
-                    FF UIDs
+                <a href="/wallet" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'wallet' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    Wallet
                 </a>
-                <a href="/profile" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'profile' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/referrals" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'referrals' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    Referrals
+                </a>
+                <a href="/uids" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'uids' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
+                    UIDs
+                </a>
+                <a href="/profile" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'profile' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     Profile
                 </a>
@@ -102,18 +110,21 @@ $flash = getFlash();
             <!-- Right: Notifications, Wallet Balance & User Profile (Exact Reference UI) -->
             <div class="flex items-center gap-3.5">
                 
-                <!-- Notification Bell with Red Badge '3' -->
+                <!-- Notification Bell with Real MySQL Unread Count Badge -->
+                <?php $userUnread = getUnreadNotificationCount($currentUser['id'], 'user'); ?>
                 <div class="relative">
-                    <button type="button" class="w-10 h-10 rounded-xl bg-[#13192A] border border-slate-700/60 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-600 transition-colors">
+                    <a href="/notifications" class="w-10 h-10 rounded-xl bg-[#13192A] border border-slate-700/60 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-600 transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                    </button>
-                    <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#FF2E51] text-white text-[11px] font-bold flex items-center justify-center border-2 border-[#0D121F]">
-                        3
-                    </span>
+                    </a>
+                    <?php if ($userUnread > 0): ?>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#FF2E51] text-white text-[11px] font-bold flex items-center justify-center border-2 border-[#0D121F]">
+                            <?= $userUnread > 9 ? '9+' : $userUnread ?>
+                        </span>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Wallet Balance Card (Exact Reference UI) -->
-                <div class="flex items-center gap-3 bg-[#13192A] border border-slate-700/60 rounded-xl px-4 py-2 hover:border-rose-500/40 transition-colors">
+                <a href="/wallet" class="flex items-center gap-3 bg-[#13192A] border border-slate-700/60 rounded-xl px-4 py-2 hover:border-rose-500/40 transition-colors">
                     <div class="w-8 h-8 rounded-lg bg-rose-500/15 border border-rose-500/25 flex items-center justify-center text-[#FF2E51]">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                     </div>
@@ -121,7 +132,7 @@ $flash = getFlash();
                         <div class="text-xs font-bold text-white tracking-wide"><?= formatCurrency((float)$currentUser['wallet_balance']) ?></div>
                         <div class="text-[10px] text-slate-400 font-medium">Wallet Balance</div>
                     </div>
-                </div>
+                </a>
 
                 <!-- User Profile Capsule with Avatar & Dropdown (Reference UI: Aaris Ali / User) -->
                 <div class="relative group" id="userMenuDropdown">

@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $initialUid = trim($_POST['ff_uid'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirmPassword = $_POST['confirm_password'] ?? '';
+    $refCodeInput = trim($_POST['ref'] ?? $_GET['ref'] ?? '');
 
     if (empty($name) || empty($email) || empty($password)) {
         $error = 'Please fill in all required fields (Name, Email, Password).';
@@ -30,18 +31,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $db->beginTransaction();
+
+                // Check Referrer
+                $referredBy = null;
+                if (!empty($refCodeInput)) {
+                    $refStmt = $db->prepare("SELECT id, name FROM users WHERE referral_code = ? AND status = 'active'");
+                    $refStmt->execute([strtoupper($refCodeInput)]);
+                    $refUser = $refStmt->fetch();
+                    if ($refUser) {
+                        $referredBy = (int)$refUser['id'];
+                    }
+                }
+
+                // Generate Unique Referral Code for New User
+                $cleanName = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $name));
+                $prefix = substr($cleanName, 0, 4);
+                if (strlen($prefix) < 3) { $prefix = 'FF'; }
+                $newRefCode = $prefix . rand(1000, 9999);
+                $chkRef = $db->prepare("SELECT id FROM users WHERE referral_code = ?");
+                $chkRef->execute([$newRefCode]);
+                while ($chkRef->fetch()) {
+                    $newRefCode = $prefix . rand(1000, 9999);
+                    $chkRef->execute([$newRefCode]);
+                }
+
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-                // Starting balance for new user to test orders
+                // Starting balance for new user
                 $initialBalance = 500.00;
 
-                $stmt = $db->prepare("INSERT INTO users (name, email, password, phone, role, wallet_balance, status) VALUES (?, ?, ?, ?, 'user', ?, 'active')");
-                $stmt->execute([$name, $email, $hashedPassword, $phone, $initialBalance]);
+                $stmt = $db->prepare("INSERT INTO users (name, email, password, phone, role, referral_code, referred_by, wallet_balance, status) VALUES (?, ?, ?, ?, 'user', ?, ?, ?, 'active')");
+                $stmt->execute([$name, $email, $hashedPassword, $phone, $newRefCode, $referredBy, $initialBalance]);
                 $newUserId = (int)$db->lastInsertId();
+
+                // Record initial balance in wallet_transactions
+                if ($initialBalance > 0) {
+                    $wtStmt = $db->prepare("INSERT INTO wallet_transactions (user_id, type, amount, balance_before, balance_after, description, reference_id, created_at) VALUES (?, 'credit', ?, 0.00, ?, 'Welcome Signup Balance', 'WELCOME-BONUS', NOW())");
+                    $wtStmt->execute([$newUserId, $initialBalance, $initialBalance]);
+                }
 
                 // If user provided Free Fire UID on signup, save it immediately
                 if (!empty($initialUid)) {
                     $uidStmt = $db->prepare("INSERT INTO saved_uids (user_id, uid_number, player_name, region, is_default) VALUES (?, ?, ?, 'India Server', 1)");
                     $uidStmt->execute([$newUserId, $initialUid, $name . '_FF']);
+                }
+
+                // Welcome Notification
+                createNotification($newUserId, "Welcome to FF Panel Store!", "Your account is created with ₹500.00 welcome balance. Top up diamonds instantly!", "success", "/dashboard", "user", $db);
+
+                // Notify Referrer if present
+                if ($referredBy) {
+                    createNotification($referredBy, "New Referral Joined!", "{$name} registered using your referral code {$refCodeInput}.", "info", "/referrals", "user", $db);
                 }
 
                 $db->commit();
@@ -61,6 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+$refParam = htmlspecialchars($_GET['ref'] ?? $_POST['ref'] ?? '');
 
 require_once __DIR__ . '/../includes/landing_header.php';
 ?>
@@ -120,6 +161,11 @@ require_once __DIR__ . '/../includes/landing_header.php';
                         <label for="confirm_password" class="block text-xs font-semibold text-slate-300 mb-1.5">Confirm Password *</label>
                         <input type="password" id="confirm_password" name="confirm_password" required class="w-full bg-[#13192A] border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 transition-colors" placeholder="Re-enter password">
                     </div>
+                </div>
+
+                <div>
+                    <label for="ref" class="block text-xs font-semibold text-slate-300 mb-1.5">Referral Code (Optional)</label>
+                    <input type="text" id="ref" name="ref" value="<?= $refParam ?>" class="w-full bg-[#13192A] border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 uppercase tracking-wider focus:outline-none focus:border-rose-500 transition-colors" placeholder="e.g. AARI5325">
                 </div>
 
                 <div class="pt-2">

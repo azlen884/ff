@@ -1,7 +1,11 @@
 <?php
-// User Panel Sidebar - Exact Reference UI Match
+/**
+ * FF Panel V2 - User Panel Sidebar
+ */
 $settings = getSiteSettings();
 $activeSidebar = $activeSidebar ?? 'home';
+$currUser = getCurrentUser();
+$notifUnread = $currUser ? getUnreadNotificationCount($currUser['id'], 'user') : 0;
 ?>
 <!-- Left Sidebar (Desktop 64w / Mobile responsive) -->
 <aside class="w-full lg:w-64 shrink-0 flex flex-col gap-5">
@@ -17,7 +21,7 @@ $activeSidebar = $activeSidebar ?? 'home';
             </div>
         </a>
 
-        <!-- Services (with 'New' badge) -->
+        <!-- Services -->
         <a href="/services" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'services' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
@@ -42,52 +46,47 @@ $activeSidebar = $activeSidebar ?? 'home';
             </div>
         </a>
 
-        <!-- Wallet -->
-        <a href="/dashboard#quick-recharge" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'wallet' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
+        <!-- Wallet Ledger -->
+        <a href="/wallet" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'wallet' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                <span>Wallet</span>
+                <span>Wallet Ledger</span>
             </div>
         </a>
 
-        <!-- Referral -->
-        <div class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-[#13192A] cursor-pointer" onclick="alert('Referral Program: Share code FF-REWARDS to earn ₹25 per referral.')">
+        <!-- Add Funds -->
+        <a href="/deposit" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'deposit' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
+            <div class="flex items-center gap-3">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                <span>Add Funds (Deposit)</span>
+            </div>
+        </a>
+
+        <!-- Referral Program -->
+        <a href="/referrals" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'referrals' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <span>Referral</span>
+                <span>Referral Program</span>
             </div>
-        </div>
-
-        <!-- Coupons -->
-        <div class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-[#13192A] cursor-pointer" onclick="alert('Available Coupons: Use code FF10 for instant ₹10 OFF on orders!')">
-            <div class="flex items-center gap-3">
-                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 11h.01M7 15h.01M17 7h.01M17 11h.01M17 15h.01M10 7h4a1 1 0 011 1v8a1 1 0 01-1 1h-4a1 1 0 01-1-1V8a1 1 0 011-1z"></path></svg>
-                <span>Coupons</span>
-            </div>
-        </div>
-
-        <!-- Leaderboard -->
-        <div class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-[#13192A] cursor-pointer" onclick="alert('Top Player of the Month: Aaris_Gaming with 48,000 Diamonds top-up!')">
-            <div class="flex items-center gap-3">
-                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
-                <span>Leaderboard</span>
-            </div>
-        </div>
+            <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full">5%</span>
+        </a>
 
         <!-- Notifications -->
-        <div class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-[#13192A] cursor-pointer" onclick="alert('Notifications: 1. Account verified. 2. ₹1,250 balance active. 3. New Evo gun skins added.')">
+        <a href="/notifications" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'notifications' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                 <span>Notifications</span>
             </div>
-            <span class="bg-[#FF2E51] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">3</span>
-        </div>
+            <?php if ($notifUnread > 0): ?>
+                <span class="bg-[#FF2E51] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center"><?= $notifUnread > 9 ? '9+' : $notifUnread ?></span>
+            <?php endif; ?>
+        </a>
 
         <!-- Support -->
-        <a href="https://wa.me/919876543210" target="_blank" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-[#13192A]">
+        <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $settings['support_whatsapp'] ?? '919876543210') ?>" target="_blank" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-[#13192A]">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <span>Support</span>
+                <span>Support Desk</span>
             </div>
         </a>
 
@@ -106,12 +105,12 @@ $activeSidebar = $activeSidebar ?? 'home';
         <div class="w-12 h-12 mx-auto rounded-2xl bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-[#FF2E51] mb-3 shadow-inner">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5m14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"></path></svg>
         </div>
-        <h4 class="text-sm font-bold text-white mb-1">Get More<br>With Your Orders</h4>
-        <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Refer friends and earn exciting rewards!</p>
-        <button type="button" onclick="alert('Referral link copied! Share with friends to get ₹25 per referral.')" class="w-full inline-flex items-center justify-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-semibold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-rose-600/25 transition-all">
+        <h4 class="text-sm font-bold text-white mb-1">Earn Cash<br>With Referrals</h4>
+        <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">Invite friends and get 5% commission credited directly to your wallet!</p>
+        <a href="/referrals" class="w-full inline-flex items-center justify-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-semibold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-rose-600/25 transition-all">
             <span>Invite Now</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </button>
+        </a>
     </div>
 
     <!-- Sidebar Copyright Footer (Exact Reference UI) -->

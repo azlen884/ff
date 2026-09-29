@@ -39,11 +39,11 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
                 <!-- Quick Action Buttons -->
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-                    <a href="/register.php" class="inline-flex items-center gap-2.5 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-bold text-sm px-7 py-3.5 rounded-xl shadow-xl shadow-rose-600/30 hover:shadow-rose-600/45 transition-all">
+                    <a href="/register" class="inline-flex items-center gap-2.5 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-bold text-sm px-7 py-3.5 rounded-xl shadow-xl shadow-rose-600/30 hover:shadow-rose-600/45 transition-all">
                         <span>Get Started Now</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
-                    <a href="/login.php" class="inline-flex items-center gap-2 bg-[#13192A] hover:bg-slate-800 border border-slate-700/80 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all">
+                    <a href="/login" class="inline-flex items-center gap-2 bg-[#13192A] hover:bg-slate-800 border border-slate-700/80 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all">
                         <span>Customer Login</span>
                     </a>
                 </div>
@@ -175,7 +175,7 @@ require_once __DIR__ . '/../includes/landing_header.php';
                                 <div class="text-[11px] text-slate-400 line-through"><?= formatCurrency((float)$service['original_price']) ?></div>
                             <?php endif; ?>
                         </div>
-                        <a href="/login.php" class="inline-flex items-center gap-1.5 bg-[#FF2E51] hover:bg-rose-600 text-white font-semibold text-xs px-3.5 py-2 rounded-xl shadow-md shadow-rose-600/20 transition-all">
+                        <a href="/login" class="inline-flex items-center gap-1.5 bg-[#FF2E51] hover:bg-rose-600 text-white font-semibold text-xs px-3.5 py-2 rounded-xl shadow-md shadow-rose-600/20 transition-all">
                             <span>Recharge</span>
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </a>
@@ -185,7 +185,7 @@ require_once __DIR__ . '/../includes/landing_header.php';
         </div>
 
         <div class="text-center mt-10">
-            <a href="/register.php" class="inline-flex items-center gap-2 text-sm font-bold text-rose-400 hover:text-rose-300">
+            <a href="/register" class="inline-flex items-center gap-2 text-sm font-bold text-rose-400 hover:text-rose-300">
                 <span>View Full Free Fire Catalog & Save UIDs</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
             </a>
@@ -301,11 +301,11 @@ require_once __DIR__ . '/../includes/landing_header.php';
             Join thousands of satisfied gamers who trust FF Panel Store for safe, instant diamond recharges every day.
         </p>
         <div class="flex items-center justify-center gap-4 pt-2">
-            <a href="/register.php" class="inline-flex items-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-xl shadow-rose-600/30 transition-all">
+            <a href="/register" class="inline-flex items-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-xl shadow-rose-600/30 transition-all">
                 <span>Create Free Account</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </a>
-            <a href="/login.php" class="inline-flex items-center gap-2 bg-[#13192A] hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all">
+            <a href="/login" class="inline-flex items-center gap-2 bg-[#13192A] hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all">
                 <span>Sign In to Dashboard</span>
             </a>
         </div>
