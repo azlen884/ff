@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../config/app.php';
 
 // If already logged in as admin, redirect to admin dashboard
 if (getCurrentAdmin()) {
-    header('Location: /admin/dashboard.php');
+    header('Location: /admin');
     exit;
 }
 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_id'] = $admin['id'];
                 $_SESSION['admin_name'] = $admin['name'];
                 setFlash('success', 'Admin session authenticated. Welcome back, ' . $admin['name']);
-                header('Location: /admin/dashboard.php');
+                header('Location: /admin');
                 exit;
             }
         } else {
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <div class="bg-[#111728] border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
-            <form action="/admin/login.php" method="POST" class="space-y-4">
+            <form action="/admin/login" method="POST" class="space-y-4">
                 <?= csrfField() ?>
 
                 <div>

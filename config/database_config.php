@@ -1,7 +1,7 @@
 <?php
 /**
  * FF Panel Database Configuration
- * Automatically generated on 2026-09-29 09:51:19
+ * Automatically generated on 2026-09-29 10:16:52
  */
 
 return [

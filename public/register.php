@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_name'] = $name;
                 $_SESSION['user_role'] = 'user';
                 setFlash('success', 'Account created successfully! ₹500 welcome balance credited to your wallet.');
-                header('Location: /user/dashboard.php');
+                header('Location: /dashboard');
                 exit;
             } catch (Exception $e) {
                 if ($db->inTransaction()) {
@@ -87,7 +87,7 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
         <!-- Form Card -->
         <div class="bg-[#0D121F] border border-slate-800/80 rounded-2xl p-6 sm:p-8 shadow-2xl">
-            <form action="/register.php" method="POST" class="space-y-4">
+            <form action="/register" method="POST" class="space-y-4">
                 <?= csrfField() ?>
 
                 <div>
@@ -132,7 +132,7 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
             <div class="mt-6 pt-5 border-t border-slate-800 text-center text-xs text-slate-400">
                 Already registered? 
-                <a href="/login.php" class="text-rose-400 hover:text-rose-300 font-semibold ml-1">Sign In instead</a>
+                <a href="/login" class="text-rose-400 hover:text-rose-300 font-semibold ml-1">Sign In instead</a>
             </div>
         </div>
 

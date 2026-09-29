@@ -114,7 +114,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                     <span class="text-rose-500">🔥</span>
                     <h3 class="text-sm font-bold text-white tracking-wide">Shop by Category</h3>
                 </div>
-                <a href="/user/services.php" class="text-xs font-semibold text-rose-400 hover:text-rose-300 flex items-center gap-1">
+                <a href="/services" class="text-xs font-semibold text-rose-400 hover:text-rose-300 flex items-center gap-1">
                     <span>View All</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </a>
@@ -263,7 +263,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
             </div>
 
             <!-- Quick Recharge Form -->
-            <form action="/user/order.php" method="POST" class="space-y-3.5" id="quickRechargeForm">
+            <form action="/order" method="POST" class="space-y-3.5" id="quickRechargeForm">
                 <?= csrfField() ?>
                 <input type="hidden" name="action" value="quick_recharge">
 
@@ -385,7 +385,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
             <button type="button" onclick="closeOrderModal()" class="text-slate-400 hover:text-white text-lg">&times;</button>
         </div>
 
-        <form action="/user/order.php" method="POST" class="space-y-4">
+        <form action="/order" method="POST" class="space-y-4">
             <?= csrfField() ?>
             <input type="hidden" name="action" value="place_order">
             <input type="hidden" name="service_id" id="modal_service_id" value="">

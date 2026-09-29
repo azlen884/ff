@@ -10,7 +10,7 @@ $activeSidebar = $activeSidebar ?? 'home';
     <div class="bg-[#0D121F] border border-slate-800/80 rounded-2xl p-2.5 space-y-1.5 shadow-xl">
         
         <!-- Home -->
-        <a href="/user/dashboard.php" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'home' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
+        <a href="/dashboard" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'home' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <span>Home</span>
@@ -18,7 +18,7 @@ $activeSidebar = $activeSidebar ?? 'home';
         </a>
 
         <!-- Services (with 'New' badge) -->
-        <a href="/user/services.php" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'services' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
+        <a href="/services" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'services' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                 <span>Services</span>
@@ -27,7 +27,7 @@ $activeSidebar = $activeSidebar ?? 'home';
         </a>
 
         <!-- Orders -->
-        <a href="/user/orders.php" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'orders' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
+        <a href="/orders" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'orders' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                 <span>Orders</span>
@@ -35,7 +35,7 @@ $activeSidebar = $activeSidebar ?? 'home';
         </a>
 
         <!-- FF UIDs -->
-        <a href="/user/uids.php" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'uids' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
+        <a href="/uids" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'uids' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
                 <span>FF UIDs</span>
@@ -43,7 +43,7 @@ $activeSidebar = $activeSidebar ?? 'home';
         </a>
 
         <!-- Wallet -->
-        <a href="/user/dashboard.php#quick-recharge" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'wallet' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
+        <a href="/dashboard#quick-recharge" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'wallet' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                 <span>Wallet</span>
@@ -92,7 +92,7 @@ $activeSidebar = $activeSidebar ?? 'home';
         </a>
 
         <!-- Profile -->
-        <a href="/user/profile.php" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'profile' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
+        <a href="/profile" class="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all <?= $activeSidebar === 'profile' ? 'bg-[#FF2E51] text-white shadow-lg shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-[#13192A]' ?>">
             <div class="flex items-center gap-3">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 <span>Profile</span>

@@ -6,5 +6,5 @@ unset($_SESSION['user_name']);
 unset($_SESSION['user_role']);
 
 setFlash('info', 'You have been successfully signed out.');
-header('Location: /login.php');
+header('Location: /login');
 exit;

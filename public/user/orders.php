@@ -129,7 +129,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                                     </span>
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <a href="/user/order-detail.php?id=<?= $o['id'] ?>" class="inline-flex items-center gap-1 bg-[#141A2D] hover:bg-slate-700 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 text-[11px] font-semibold transition-colors">
+                                    <a href="/order-detail?id=<?= $o['id'] ?>" class="inline-flex items-center gap-1 bg-[#141A2D] hover:bg-slate-700 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 text-[11px] font-semibold transition-colors">
                                         <span>Details</span>
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                                     </a>

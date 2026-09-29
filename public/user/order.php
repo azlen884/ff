@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->commit();
 
         setFlash('success', "Order #{$orderNumber} placed successfully! {$service['title']} has been processed for UID {$playerUid}.");
-        header("Location: /user/order-detail.php?id={$newOrderId}");
+        header("Location: /order-detail?id={$newOrderId}");
         exit;
 
     } catch (Exception $e) {
@@ -85,11 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db->rollBack();
         }
         setFlash('error', 'Order processing failed: ' . $e->getMessage());
-        header('Location: /user/dashboard.php');
+        header('Location: /dashboard');
         exit;
     }
 }
 
 // Fallback if accessed via GET
-header('Location: /user/dashboard.php');
+header('Location: /dashboard');
 exit;

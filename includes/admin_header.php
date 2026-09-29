@@ -43,7 +43,7 @@ $pendingOrdersCount = (int)$db->query("SELECT COUNT(*) FROM orders WHERE status 
     <header class="border-b border-slate-800/80 bg-[#0F1422] z-30">
         <div class="w-full px-4 lg:px-8 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <a href="/admin/dashboard.php" class="flex items-center gap-3">
+                <a href="/admin" class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-600 to-red-800 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-rose-600/30">
                         ⚡
                     </div>
@@ -71,7 +71,7 @@ $pendingOrdersCount = (int)$db->query("SELECT COUNT(*) FROM orders WHERE status 
 
             <!-- Admin Profile & Quick Links -->
             <div class="flex items-center gap-4">
-                <a href="/user/dashboard.php" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white bg-[#141A2E] border border-slate-700/60 px-3 py-1.5 rounded-lg transition-colors">
+                <a href="/dashboard" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white bg-[#141A2E] border border-slate-700/60 px-3 py-1.5 rounded-lg transition-colors">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     <span>View Customer Store</span>
                 </a>
@@ -84,7 +84,7 @@ $pendingOrdersCount = (int)$db->query("SELECT COUNT(*) FROM orders WHERE status 
                         <div class="text-xs font-bold text-white"><?= htmlspecialchars($currentAdmin['name']) ?></div>
                         <div class="text-[10px] text-rose-400 font-semibold uppercase">Super Admin</div>
                     </div>
-                    <a href="/admin/logout.php" title="Sign Out" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-slate-800 transition-colors">
+                    <a href="/admin/logout" title="Sign Out" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-slate-800 transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </a>
                 </div>

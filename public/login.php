@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_role'] = 'user';
                 setFlash('success', 'Welcome back, ' . $user['name'] . '! Access your Free Fire dashboard below.');
-                header('Location: /user/dashboard.php');
+                header('Location: /dashboard');
                 exit;
             }
         } else {
@@ -73,7 +73,7 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
         <!-- Form Card -->
         <div class="bg-[#0D121F] border border-slate-800/80 rounded-2xl p-6 sm:p-8 shadow-2xl">
-            <form action="/login.php" method="POST" class="space-y-4">
+            <form action="/login" method="POST" class="space-y-4">
                 <?= csrfField() ?>
 
                 <div>
@@ -96,7 +96,7 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
             <div class="mt-6 pt-5 border-t border-slate-800 text-center text-xs text-slate-400">
                 Don't have an account yet? 
-                <a href="/register.php" class="text-rose-400 hover:text-rose-300 font-semibold ml-1">Create an account</a>
+                <a href="/register" class="text-rose-400 hover:text-rose-300 font-semibold ml-1">Create an account</a>
             </div>
         </div>
 

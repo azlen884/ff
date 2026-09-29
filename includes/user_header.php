@@ -50,7 +50,7 @@ $flash = getFlash();
             
             <!-- Left: Brand Logo -->
             <div class="flex items-center gap-6">
-                <a href="/user/dashboard.php" class="flex items-center gap-3 group shrink-0">
+                <a href="/dashboard" class="flex items-center gap-3 group shrink-0">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF2E51] to-[#D91438] flex items-center justify-center shadow-lg shadow-rose-600/30 group-hover:scale-105 transition-transform duration-200">
                         <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
@@ -66,7 +66,7 @@ $flash = getFlash();
 
                 <!-- Search Input Bar (Reference UI) -->
                 <div class="hidden xl:block w-80 2xl:w-96">
-                    <form action="/user/services.php" method="GET" class="relative">
+                    <form action="/services" method="GET" class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
@@ -77,23 +77,23 @@ $flash = getFlash();
 
             <!-- Middle: Horizontal Nav Tabs (Reference UI) -->
             <div class="hidden lg:flex items-center gap-1 bg-[#13192A]/80 p-1 rounded-2xl border border-slate-800/80">
-                <a href="/user/dashboard.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'home' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/dashboard" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'home' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     Home
                 </a>
-                <a href="/user/services.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'services' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/services" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'services' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                     Services
                 </a>
-                <a href="/user/orders.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'orders' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/orders" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'orders' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                     Orders
                 </a>
-                <a href="/user/uids.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'uids' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/uids" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'uids' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
                     FF UIDs
                 </a>
-                <a href="/user/profile.php" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'profile' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
+                <a href="/profile" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all <?= $activeNav === 'profile' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' ?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     Profile
                 </a>
@@ -140,11 +140,11 @@ $flash = getFlash();
                         <div class="px-4 py-2 border-b border-slate-800 text-[11px] text-slate-400">
                             Signed in as <span class="text-white font-semibold block truncate"><?= htmlspecialchars($currentUser['email']) ?></span>
                         </div>
-                        <a href="/user/profile.php" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">My Profile</a>
-                        <a href="/user/uids.php" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">Manage FF UIDs</a>
-                        <a href="/user/orders.php" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">Order History</a>
+                        <a href="/profile" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">My Profile</a>
+                        <a href="/uids" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">Manage FF UIDs</a>
+                        <a href="/orders" class="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800/60">Order History</a>
                         <div class="border-t border-slate-800 my-1"></div>
-                        <a href="/logout.php" class="block px-4 py-2 text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/30">Sign Out</a>
+                        <a href="/logout" class="block px-4 py-2 text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/30">Sign Out</a>
                     </div>
                 </div>
 

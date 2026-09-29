@@ -1,0 +1,85 @@
+# ==============================================================================
+# FF Panel DocumentRoot (/public) Apache Configuration (.htaccess)
+# ==============================================================================
+
+Options -Indexes -MultiViews
+AddDefaultCharset UTF-8
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(lock|sql|json|md|log|sh|yml|yaml|bak|example)$">
+    Require all denied
+</FilesMatch>
+
+ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Preserve static assets
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot)$ - [L]
+
+    # Redirect GET/HEAD requests ending in .php to clean URLs
+    RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$ [NC]
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+([^\s?]+)\.php[\s?] [NC]
+    RewriteRule ^([^\s?]+)\.php$ /$1 [R=301,L]
+
+    # Clean Public Routes
+    RewriteRule ^login$ login.php [L,QSA]
+    RewriteRule ^register$ register.php [L,QSA]
+    RewriteRule ^logout$ logout.php [L,QSA]
+    RewriteRule ^install$ install.php [L,QSA]
+    RewriteRule ^installer$ install.php [L,QSA]
+    RewriteRule ^404$ 404.php [L,QSA]
+
+    # Clean User Routes
+    RewriteRule ^dashboard$ user/dashboard.php [L,QSA]
+    RewriteRule ^orders$ user/orders.php [L,QSA]
+    RewriteRule ^order$ user/order.php [L,QSA]
+    RewriteRule ^order-detail$ user/order-detail.php [L,QSA]
+    RewriteRule ^services$ user/services.php [L,QSA]
+    RewriteRule ^uids$ user/uids.php [L,QSA]
+    RewriteRule ^profile$ user/profile.php [L,QSA]
+
+    RewriteRule ^user/?$ user/dashboard.php [L,QSA]
+    RewriteRule ^user/dashboard$ user/dashboard.php [L,QSA]
+    RewriteRule ^user/orders$ user/orders.php [L,QSA]
+    RewriteRule ^user/order$ user/order.php [L,QSA]
+    RewriteRule ^user/order-detail$ user/order-detail.php [L,QSA]
+    RewriteRule ^user/services$ user/services.php [L,QSA]
+    RewriteRule ^user/uids$ user/uids.php [L,QSA]
+    RewriteRule ^user/profile$ user/profile.php [L,QSA]
+
+    # Clean Admin Routes
+    RewriteRule ^admin/?$ admin/dashboard.php [L,QSA]
+    RewriteRule ^admin/dashboard$ admin/dashboard.php [L,QSA]
+    RewriteRule ^admin/login$ admin/login.php [L,QSA]
+    RewriteRule ^admin/logout$ admin/logout.php [L,QSA]
+    RewriteRule ^admin/orders$ admin/orders.php [L,QSA]
+    RewriteRule ^admin/services$ admin/services.php [L,QSA]
+    RewriteRule ^admin/users$ admin/users.php [L,QSA]
+    RewriteRule ^admin/settings$ admin/settings.php [L,QSA]
+
+    # Existing Files
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Root Homepage
+    RewriteRule ^$ index.php [L,QSA]
+
+    # 404 Fallback
+    RewriteRule ^.*$ 404.php [L]
+</IfModule>

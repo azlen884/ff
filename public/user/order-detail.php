@@ -15,7 +15,7 @@ $order = $stmt->fetch();
 
 if (!$order) {
     setFlash('error', 'Order not found or you do not have permission to view it.');
-    header('Location: /user/orders.php');
+    header('Location: /orders');
     exit;
 }
 
@@ -31,7 +31,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
     
     <!-- Header with Back Button -->
     <div class="flex items-center justify-between gap-4">
-        <a href="/user/orders.php" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors">
+        <a href="/orders" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             <span>Back to My Orders</span>
         </a>

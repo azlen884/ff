@@ -97,7 +97,7 @@ function requireUser(): array {
     $user = getCurrentUser();
     if (!$user) {
         setFlash('error', 'Please log in to access your user panel.');
-        header('Location: /login.php');
+        header('Location: /login');
         exit;
     }
     return $user;
@@ -107,7 +107,7 @@ function requireAdmin(): array {
     $admin = getCurrentAdmin();
     if (!$admin) {
         setFlash('error', 'Administrator credentials required to access this panel.');
-        header('Location: /admin/login.php');
+        header('Location: /admin/login');
         exit;
     }
     return $admin;
@@ -115,7 +115,7 @@ function requireAdmin(): array {
 
 function guestOnly(): void {
     if (getCurrentUser()) {
-        header('Location: /user/dashboard.php');
+        header('Location: /dashboard');
         exit;
     }
 }

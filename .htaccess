@@ -1,0 +1,110 @@
+# ==============================================================================
+# FF Panel Production Apache Configuration (.htaccess)
+# Clean URLs, Security Protections, and Asset Optimization
+# ==============================================================================
+
+# 1. Disable Directory Browsing
+Options -Indexes -MultiViews
+
+# 2. Default Encoding
+AddDefaultCharset UTF-8
+
+# 3. Security Headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# 4. Block Sensitive Files & Directories
+# Block dot-files (.env, .git, .htaccess, .lock)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Block dangerous extensions (.lock, .sql, .json, .md, .log, .sh, .yml, .yaml, .bak)
+<FilesMatch "\.(lock|sql|json|md|log|sh|yml|yaml|bak|example)$">
+    Require all denied
+</FilesMatch>
+
+# Specifically protect internal directories
+<IfModule mod_authz_core.c>
+    <DirectoryMatch "^.*/(config|database|includes|src)/.*">
+        Require all denied
+    </DirectoryMatch>
+</IfModule>
+
+# 5. Custom Error Handling
+ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
+
+# 6. URL Rewriting Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Block direct access to internal and sensitive paths
+    RewriteRule ^(\.env|config/|database/|includes/|src/|package\.json|.*\.lock|.*\.sql) - [F,L,NC]
+
+    # Preserve static assets (CSS, JS, Fonts, Images)
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot)$ - [L]
+
+    # Redirect GET/HEAD requests ending in .php to clean extensionless URLs (avoids duplicate URLs)
+    RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$ [NC]
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+([^\s?]+)\.php[\s?] [NC]
+    RewriteRule ^([^\s?]+)\.php$ /$1 [R=301,L]
+
+    # Clean Public & Auth Routes
+    RewriteRule ^login$ /public/login.php [L,QSA]
+    RewriteRule ^register$ /public/register.php [L,QSA]
+    RewriteRule ^logout$ /public/logout.php [L,QSA]
+    RewriteRule ^install$ /public/install.php [L,QSA]
+    RewriteRule ^installer$ /public/install.php [L,QSA]
+    RewriteRule ^404$ /public/404.php [L,QSA]
+
+    # Clean User Portal Routes (Direct Shortcuts)
+    RewriteRule ^dashboard$ /public/user/dashboard.php [L,QSA]
+    RewriteRule ^orders$ /public/user/orders.php [L,QSA]
+    RewriteRule ^order$ /public/user/order.php [L,QSA]
+    RewriteRule ^order-detail$ /public/user/order-detail.php [L,QSA]
+    RewriteRule ^services$ /public/user/services.php [L,QSA]
+    RewriteRule ^uids$ /public/user/uids.php [L,QSA]
+    RewriteRule ^profile$ /public/user/profile.php [L,QSA]
+
+    # Clean User Portal Routes (Prefix Style)
+    RewriteRule ^user/?$ /public/user/dashboard.php [L,QSA]
+    RewriteRule ^user/dashboard$ /public/user/dashboard.php [L,QSA]
+    RewriteRule ^user/orders$ /public/user/orders.php [L,QSA]
+    RewriteRule ^user/order$ /public/user/order.php [L,QSA]
+    RewriteRule ^user/order-detail$ /public/user/order-detail.php [L,QSA]
+    RewriteRule ^user/services$ /public/user/services.php [L,QSA]
+    RewriteRule ^user/uids$ /public/user/uids.php [L,QSA]
+    RewriteRule ^user/profile$ /public/user/profile.php [L,QSA]
+
+    # Clean Admin Portal Routes
+    RewriteRule ^admin/?$ /public/admin/dashboard.php [L,QSA]
+    RewriteRule ^admin/dashboard$ /public/admin/dashboard.php [L,QSA]
+    RewriteRule ^admin/login$ /public/admin/login.php [L,QSA]
+    RewriteRule ^admin/logout$ /public/admin/logout.php [L,QSA]
+    RewriteRule ^admin/orders$ /public/admin/orders.php [L,QSA]
+    RewriteRule ^admin/services$ /public/admin/services.php [L,QSA]
+    RewriteRule ^admin/users$ /public/admin/users.php [L,QSA]
+    RewriteRule ^admin/settings$ /public/admin/settings.php [L,QSA]
+
+    # Static Assets in /public directory fallback
+    RewriteCond %{DOCUMENT_ROOT}/public/%{REQUEST_URI} -f
+    RewriteRule ^(.*)$ /public/$1 [L]
+
+    # Existing Files and Directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Root Homepage
+    RewriteRule ^$ /public/index.php [L,QSA]
+
+    # Fallback to 404
+    RewriteRule ^.*$ /public/404.php [L]
+</IfModule>

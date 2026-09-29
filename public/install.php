@@ -17,7 +17,7 @@ $isInstalled = file_exists($lockFile);
 // Once successfully installed: Block direct access to installer URL
 if ($isInstalled) {
     http_response_code(403);
-    header('Location: /admin/login.php');
+    header('Location: /admin/login');
     exit;
 }
 
@@ -257,8 +257,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
             // STEP 7: Set success flash message and redirect to Admin Login
             setFlash('success', 'Installation completed successfully! Your database is configured and your administrator account is active. Please sign in below.');
-            header('Location: /admin/login.php?installed=1');
-            echo "<script>window.location.href='/admin/login.php?installed=1';</script>";
+            header('Location: /admin/login?installed=1');
+            echo "<script>window.location.href='/admin/login?installed=1';</script>";
             exit;
 
         } catch (Exception $e) {
@@ -362,7 +362,7 @@ $reqs = [
         </div>
 
         <!-- Installation Form -->
-        <form action="/install.php" method="POST" class="space-y-6" id="installForm">
+        <form action="/install" method="POST" class="space-y-6" id="installForm">
             <input type="hidden" name="action" value="install">
 
             <!-- Step 2: Database Configuration -->
@@ -476,7 +476,7 @@ $reqs = [
         formData.append('db_user', user);
         formData.append('db_pass', pass);
 
-        fetch('/install.php', {
+        fetch('/install', {
             method: 'POST',
             body: formData
         })

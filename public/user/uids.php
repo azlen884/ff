@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 setFlash('success', "UID {$uidNumber} added successfully to your account!");
             }
         }
-        header('Location: /user/uids.php');
+        header('Location: /uids');
         exit;
     }
 
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $setDefault->execute([$uidId, $currentUser['id']]);
 
         setFlash('success', 'Default Free Fire UID updated.');
-        header('Location: /user/uids.php');
+        header('Location: /uids');
         exit;
     }
 
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $del->execute([$uidId, $currentUser['id']]);
 
         setFlash('info', 'Free Fire UID removed from saved list.');
-        header('Location: /user/uids.php');
+        header('Location: /uids');
         exit;
     }
 }
@@ -124,7 +124,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
 
                     <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
                         <?php if (!$item['is_default']): ?>
-                            <form action="/user/uids.php" method="POST" class="inline">
+                            <form action="/uids" method="POST" class="inline">
                                 <?= csrfField() ?>
                                 <input type="hidden" name="action" value="set_default">
                                 <input type="hidden" name="uid_id" value="<?= $item['id'] ?>">
@@ -138,7 +138,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                             </span>
                         <?php endif; ?>
 
-                        <form action="/user/uids.php" method="POST" onsubmit="return confirm('Are you sure you want to remove this UID?');" class="inline">
+                        <form action="/uids" method="POST" onsubmit="return confirm('Are you sure you want to remove this UID?');" class="inline">
                             <?= csrfField() ?>
                             <input type="hidden" name="action" value="delete_uid">
                             <input type="hidden" name="uid_id" value="<?= $item['id'] ?>">
@@ -157,7 +157,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
         <h3 class="text-base font-bold text-white mb-1">Add Free Fire Player UID</h3>
         <p class="text-xs text-slate-400 mb-5">Save your game ID so you can top-up instantly anytime.</p>
 
-        <form action="/user/uids.php" method="POST" class="space-y-4">
+        <form action="/uids" method="POST" class="space-y-4">
             <?= csrfField() ?>
             <input type="hidden" name="action" value="add_uid">
 

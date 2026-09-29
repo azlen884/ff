@@ -162,7 +162,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
             <button type="button" onclick="closeOrderModal()" class="text-slate-400 hover:text-white text-lg">&times;</button>
         </div>
 
-        <form action="/user/order.php" method="POST" class="space-y-4">
+        <form action="/order" method="POST" class="space-y-4">
             <?= csrfField() ?>
             <input type="hidden" name="action" value="place_order">
             <input type="hidden" name="service_id" id="modal_service_id" value="">
