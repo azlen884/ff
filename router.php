@@ -7,7 +7,7 @@
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $file = __DIR__ . '/public' . $uri;
 
-// 1. Static file with MIME header
+// 1. Static assets only (css, js, images, fonts)
 if ($uri !== '/' && file_exists($file) && !is_dir($file)) {
     $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
     $mimes = [
@@ -32,27 +32,39 @@ if ($uri !== '/' && file_exists($file) && !is_dir($file)) {
         readfile($file);
         return;
     }
+}
 
-    if ($ext === 'php') {
-        require $file;
-        return;
+// 2. Installation Check: Auto-redirect if not installed; block installer once installed
+$isInstalled = file_exists(__DIR__ . '/config/installed.lock');
+
+if (!$isInstalled) {
+    // If not installed, redirect everything except installer and static assets to /install.php
+    if (!str_starts_with($uri, '/install') && !str_starts_with($uri, '/css') && !str_starts_with($uri, '/js')) {
+        header('Location: /install.php');
+        exit;
+    }
+} else {
+    // If already installed, block direct access to installer
+    if (str_starts_with($uri, '/install') || $uri === '/install.php') {
+        http_response_code(403);
+        header('Location: /admin/login.php');
+        exit;
     }
 }
 
-// 2. Installation Check: Auto-redirect to installer if not installed
-$isInstalled = file_exists(__DIR__ . '/config/installed.lock');
-if (!$isInstalled && !str_starts_with($uri, '/install') && !str_starts_with($uri, '/css') && !str_starts_with($uri, '/js')) {
-    header('Location: /install.php');
-    exit;
+// 3. Exact PHP file (e.g. /public/install.php, /public/login.php)
+if (file_exists($file) && is_file($file) && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+    require $file;
+    return;
 }
 
-// 2. Extensionless PHP route (e.g. /login -> /public/login.php, /user/dashboard -> /public/user/dashboard.php)
+// 4. Extensionless PHP route (e.g. /login -> /public/login.php, /user/dashboard -> /public/user/dashboard.php)
 if (file_exists($file . '.php')) {
     require $file . '.php';
     return;
 }
 
-// 3. Directory index routing
+// 5. Directory index routing
 if (is_dir($file)) {
     if (file_exists($file . '/dashboard.php')) {
         require $file . '/dashboard.php';
@@ -64,5 +76,5 @@ if (is_dir($file)) {
     }
 }
 
-// 4. Default fallback: Landing Page
+// 6. Default fallback: Landing Page
 require __DIR__ . '/public/index.php';

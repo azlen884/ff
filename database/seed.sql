@@ -1,8 +1,7 @@
 USE `ffpanel`;
 
--- Insert Admin & Demo User
+-- Insert Demo Customer User (Aaris Ali matching reference image)
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `role`, `wallet_balance`, `status`) VALUES
-(1, 'System Administrator', 'admin@ffpanel.com', '$2y$10$2jFDcUti5z1Hn3HSUjsl2.hk96GLC27NUQvXwZqVtLgX6A.3CXq5O', '+91 9876543210', 'admin', 50000.00, 'active'),
 (2, 'Aaris Ali', 'aaris@ffpanel.com', '$2y$10$BgdpPSsU06oUMigTDvpdAeLtyPwf2AI6WROvHtoQKtCY9Gr7f6GiG', '+91 9123456789', 'user', 1250.00, 'active')
 ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
 
