@@ -39,6 +39,13 @@ if ($uri !== '/' && file_exists($file) && !is_dir($file)) {
     }
 }
 
+// 2. Installation Check: Auto-redirect to installer if not installed
+$isInstalled = file_exists(__DIR__ . '/config/installed.lock');
+if (!$isInstalled && !str_starts_with($uri, '/install') && !str_starts_with($uri, '/css') && !str_starts_with($uri, '/js')) {
+    header('Location: /install.php');
+    exit;
+}
+
 // 2. Extensionless PHP route (e.g. /login -> /public/login.php, /user/dashboard -> /public/user/dashboard.php)
 if (file_exists($file . '.php')) {
     require $file . '.php';

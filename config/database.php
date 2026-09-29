@@ -10,11 +10,22 @@ function getDbConnection(): PDO {
         return $pdo;
     }
 
-    $host = getenv('DB_HOST') ?: '127.0.0.1';
-    $port = getenv('DB_PORT') ?: '3306';
-    $dbname = getenv('DB_NAME') ?: 'ffpanel';
-    $username = getenv('DB_USER') ?: 'root';
-    $password = getenv('DB_PASS') ?: '';
+    // Load from installer configuration if present
+    $configFile = __DIR__ . '/database_config.php';
+    if (file_exists($configFile)) {
+        $dbConfig = require $configFile;
+        $host = $dbConfig['host'] ?? '127.0.0.1';
+        $port = $dbConfig['port'] ?? '3306';
+        $dbname = $dbConfig['dbname'] ?? 'ffpanel';
+        $username = $dbConfig['username'] ?? 'root';
+        $password = $dbConfig['password'] ?? '';
+    } else {
+        $host = getenv('DB_HOST') ?: '127.0.0.1';
+        $port = getenv('DB_PORT') ?: '3306';
+        $dbname = getenv('DB_NAME') ?: 'ffpanel';
+        $username = getenv('DB_USER') ?: 'root';
+        $password = getenv('DB_PASS') ?: '';
+    }
 
     $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
     $options = [
@@ -27,7 +38,7 @@ function getDbConnection(): PDO {
         $pdo = new PDO($dsn, $username, $password, $options);
         return $pdo;
     } catch (PDOException $e) {
-        // Fallback with ffpanel user if root needs password
+        // Fallback with ffpanel user if root requires specific credentials
         try {
             $pdo = new PDO($dsn, 'ffpanel', 'ffpanel_password', $options);
             return $pdo;
@@ -36,6 +47,7 @@ function getDbConnection(): PDO {
                 <h3 style='margin-top:0;'>Database Connection Error</h3>
                 <p>Could not connect to MySQL database.</p>
                 <p style='color:#9ca3af;font-size:12px;'>Error: " . htmlspecialchars($ex->getMessage()) . "</p>
+                <p style='margin-top:16px;'><a href='/install.php' style='color:#60a5fa;'>Run Web Installer &rarr;</a></p>
             </div>");
         }
     }

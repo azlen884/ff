@@ -12,6 +12,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/database.php';
 
+// Check whether application is already installed
+function isInstalled(): bool {
+    return file_exists(__DIR__ . '/installed.lock');
+}
+
 // Generate CSRF Token
 function csrfToken(): string {
     if (empty($_SESSION['csrf_token'])) {
