@@ -34,6 +34,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $maxQty = (int)($_POST['max_qty'] ?? 1);
         $isPopular = !empty($_POST['is_popular']) ? 1 : 0;
         $isActive = !empty($_POST['is_active']) ? 1 : 0;
+        $imageUrl = trim($_POST['existing_image_url'] ?? '');
+
+        // Handle image upload if a file was provided
+        if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['product_image'];
+            $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $file['tmp_name']);
+            finfo_close($finfo);
+
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+            if (!in_array($mimeType, $allowedMimes) || !in_array($ext, $allowedExts)) {
+                setFlash('error', 'Invalid image format. Allowed formats: PNG, JPG, JPEG, WEBP, GIF.');
+                header('Location: /admin/services');
+                exit;
+            }
+
+            if ($file['size'] > 5 * 1024 * 1024) {
+                setFlash('error', 'Image size exceeds maximum limit of 5MB.');
+                header('Location: /admin/services');
+                exit;
+            }
+
+            $uploadDir = __DIR__ . '/../uploads/products/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            $fileName = 'prod_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
+            $destPath = $uploadDir . $fileName;
+
+            if (move_uploaded_file($file['tmp_name'], $destPath)) {
+                $imageUrl = '/uploads/products/' . $fileName;
+            } else {
+                setFlash('error', 'Failed to save uploaded image.');
+                header('Location: /admin/services');
+                exit;
+            }
+        } elseif (!empty($_POST['image_url'])) {
+            $imageUrl = trim($_POST['image_url']);
+        }
 
         if (empty($title) || $price <= 0) {
             setFlash('error', 'Please provide a valid package title and selling price.');
@@ -42,12 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
 
         if ($action === 'update_service' && $id > 0) {
-            $stmt = $db->prepare("UPDATE services SET category_id = ?, provider_id = ?, provider_service_id = ?, title = ?, subtitle = ?, description = ?, amount_description = ?, provider_cost = ?, admin_margin = ?, price = ?, original_price = ?, badge1 = ?, badge2 = ?, delivery_time = ?, min_qty = ?, max_qty = ?, is_popular = ?, is_active = ? WHERE id = ?");
-            $stmt->execute([$categoryId, $providerId, $providerServiceId, $title, $subtitle, $description, $amountDesc, $providerCost, $adminMargin, $price, $origPrice, $badge1, $badge2, $delivery, $minQty, $maxQty, $isPopular, $isActive, $id]);
+            $stmt = $db->prepare("UPDATE services SET category_id = ?, provider_id = ?, provider_service_id = ?, title = ?, subtitle = ?, description = ?, amount_description = ?, provider_cost = ?, admin_margin = ?, price = ?, original_price = ?, badge1 = ?, badge2 = ?, delivery_time = ?, min_qty = ?, max_qty = ?, is_popular = ?, is_active = ?, image_url = ? WHERE id = ?");
+            $stmt->execute([$categoryId, $providerId, $providerServiceId, $title, $subtitle, $description, $amountDesc, $providerCost, $adminMargin, $price, $origPrice, $badge1, $badge2, $delivery, $minQty, $maxQty, $isPopular, $isActive, $imageUrl, $id]);
             setFlash('success', "Service '{$title}' updated successfully.");
         } else {
-            $stmt = $db->prepare("INSERT INTO services (category_id, provider_id, provider_service_id, title, subtitle, description, amount_description, provider_cost, admin_margin, price, original_price, badge1, badge2, delivery_time, min_qty, max_qty, is_popular, is_active, display_order, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, 0, NOW())");
-            $stmt->execute([$categoryId, $providerId, $providerServiceId, $title, $subtitle, $description, $amountDesc, $providerCost, $adminMargin, $price, $origPrice, $badge1, $badge2, $delivery, $minQty, $maxQty, $isPopular]);
+            $stmt = $db->prepare("INSERT INTO services (category_id, provider_id, provider_service_id, title, subtitle, description, amount_description, provider_cost, admin_margin, price, original_price, badge1, badge2, delivery_time, min_qty, max_qty, is_popular, is_active, image_url, display_order, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, 0, NOW())");
+            $stmt->execute([$categoryId, $providerId, $providerServiceId, $title, $subtitle, $description, $amountDesc, $providerCost, $adminMargin, $price, $origPrice, $badge1, $badge2, $delivery, $minQty, $maxQty, $isPopular, $imageUrl]);
             setFlash('success', "Service '{$title}' created successfully.");
         }
         header('Location: /admin/services');
@@ -140,8 +183,19 @@ require_once __DIR__ . '/../../includes/admin_header.php';
                             <?php foreach ($services as $s): ?>
                                 <tr class="hover:bg-slate-800/20 transition-colors">
                                     <td class="py-3.5 px-4 whitespace-nowrap">
-                                        <div class="font-bold text-white"><?= htmlspecialchars($s['title']) ?></div>
-                                        <div class="text-[11px] text-slate-400"><?= htmlspecialchars($s['amount_description']) ?></div>
+                                        <div class="flex items-center gap-3">
+                                            <?php if (!empty($s['image_url'])): ?>
+                                                <img src="<?= htmlspecialchars($s['image_url']) ?>" alt="<?= htmlspecialchars($s['title']) ?>" class="w-9 h-9 rounded-lg object-cover border border-slate-700/80 shrink-0">
+                                            <?php else: ?>
+                                                <div class="w-9 h-9 rounded-lg bg-[#13192A] border border-slate-700/60 flex items-center justify-center text-rose-500 font-bold text-xs shrink-0">
+                                                    💎
+                                                </div>
+                                            <?php endif; ?>
+                                            <div>
+                                                <div class="font-bold text-white"><?= htmlspecialchars($s['title']) ?></div>
+                                                <div class="text-[11px] text-slate-400"><?= htmlspecialchars($s['amount_description']) ?></div>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td class="py-3.5 px-4 text-slate-300 whitespace-nowrap">
                                         <span class="bg-[#13192A] px-2 py-0.5 rounded text-[11px] border border-slate-800"><?= htmlspecialchars($s['category_name']) ?></span>
@@ -211,10 +265,26 @@ require_once __DIR__ . '/../../includes/admin_header.php';
             <button type="button" onclick="closeServiceModal()" class="text-slate-400 hover:text-white text-lg">&times;</button>
         </div>
 
-        <form action="/admin/services" method="POST" class="space-y-4">
+        <form action="/admin/services" method="POST" enctype="multipart/form-data" class="space-y-4">
             <?= csrfField() ?>
             <input type="hidden" name="action" id="s_action" value="create_service">
             <input type="hidden" name="service_id" id="s_id" value="0">
+            <input type="hidden" name="existing_image_url" id="s_existing_image" value="">
+
+            <!-- Product Image Upload & Live Preview -->
+            <div class="bg-[#13192A] border border-slate-700/80 rounded-2xl p-3.5 space-y-2">
+                <label class="block text-xs font-semibold text-slate-300">Product / Package Image</label>
+                <div class="flex items-center gap-3.5">
+                    <div id="imagePreviewContainer" class="w-14 h-14 rounded-xl bg-[#0D121F] border border-slate-700/80 flex items-center justify-center overflow-hidden shrink-0 shadow-inner">
+                        <img id="imagePreview" src="" alt="Preview" class="w-full h-full object-cover hidden">
+                        <span id="imagePreviewPlaceholder" class="text-[10px] text-slate-500 font-semibold">No Image</span>
+                    </div>
+                    <div class="flex-1 space-y-1">
+                        <input type="file" name="product_image" id="s_image_file" accept="image/png,image/jpeg,image/webp,image/gif" onchange="previewSelectedImage(this)" class="w-full text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-white hover:file:bg-slate-700 cursor-pointer">
+                        <p class="text-[10px] text-slate-400">Supported: PNG, JPG, JPEG, WEBP (Max 5MB). Leave empty to retain current image.</p>
+                    </div>
+                </div>
+            </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
@@ -323,10 +393,32 @@ function calcPrice() {
     }
 }
 
+function previewSelectedImage(input) {
+    const preview = document.getElementById('imagePreview');
+    const placeholder = document.getElementById('imagePreviewPlaceholder');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 function openServiceModal() {
     document.getElementById('sModalTitle').innerText = 'Add New Package';
     document.getElementById('s_action').value = 'create_service';
     document.getElementById('s_id').value = '0';
+    document.getElementById('s_existing_image').value = '';
+    document.getElementById('s_image_file').value = '';
+    const preview = document.getElementById('imagePreview');
+    const placeholder = document.getElementById('imagePreviewPlaceholder');
+    preview.src = '';
+    preview.classList.add('hidden');
+    placeholder.classList.remove('hidden');
+
     document.getElementById('s_title').value = '';
     document.getElementById('s_prov').value = '';
     document.getElementById('s_psid').value = '';
@@ -348,6 +440,20 @@ function editService(s) {
     document.getElementById('sModalTitle').innerText = 'Edit ' + s.title;
     document.getElementById('s_action').value = 'update_service';
     document.getElementById('s_id').value = s.id;
+    document.getElementById('s_existing_image').value = s.image_url || '';
+    document.getElementById('s_image_file').value = '';
+    const preview = document.getElementById('imagePreview');
+    const placeholder = document.getElementById('imagePreviewPlaceholder');
+    if (s.image_url) {
+        preview.src = s.image_url;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+    } else {
+        preview.src = '';
+        preview.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+    }
+
     document.getElementById('s_cat').value = s.category_id;
     document.getElementById('s_title').value = s.title;
     document.getElementById('s_prov').value = s.provider_id || '';

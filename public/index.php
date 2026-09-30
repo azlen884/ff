@@ -155,6 +155,12 @@ require_once __DIR__ . '/../includes/landing_header.php';
                             <?php endif; ?>
                         </div>
 
+                        <?php if (!empty($service['image_url'])): ?>
+                            <div class="w-full h-28 rounded-xl overflow-hidden mb-3 border border-slate-800">
+                                <img src="<?= htmlspecialchars($service['image_url']) ?>" alt="<?= htmlspecialchars($service['title']) ?>" class="w-full h-full object-cover">
+                            </div>
+                        <?php endif; ?>
+
                         <!-- Service Title & Subtitle -->
                         <h4 class="text-base font-bold text-white group-hover:text-rose-400 transition-colors">
                             <?= htmlspecialchars($service['title']) ?>

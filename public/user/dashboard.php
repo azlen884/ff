@@ -37,6 +37,34 @@ $liveOrders = $db->query("SELECT o.*, s.title as service_title, s.category_id,
                           ORDER BY o.created_at DESC 
                           LIMIT 5")->fetchAll();
 
+// Database-driven / Admin-manageable 2-3 Banners
+$dashboardBanners = [
+    [
+        'image' => !empty($settings['banner_1_image']) ? $settings['banner_1_image'] : '/images/banners/banner_diamonds.svg',
+        'badge' => 'Instant Free Fire Diamonds',
+        'title' => 'Get Your Free Fire Diamonds Instantly',
+        'subtitle' => 'UID top-up, double bonus diamonds, and fast automated delivery.',
+        'link' => '/services?category=diamonds',
+        'link_text' => 'Top Up Diamonds'
+    ],
+    [
+        'image' => !empty($settings['banner_2_image']) ? $settings['banner_2_image'] : '/images/banners/banner_membership.svg',
+        'badge' => 'Weekly & Monthly Pass',
+        'title' => 'Save Up to 50% on Memberships',
+        'subtitle' => 'Claim daily diamonds, special badges, and exclusive weekly VIP rewards.',
+        'link' => '/services?category=membership',
+        'link_text' => 'Get Membership'
+    ],
+    [
+        'image' => !empty($settings['banner_3_image']) ? $settings['banner_3_image'] : '/images/banners/banner_evogun.svg',
+        'badge' => 'Evo Gun Tokens & Crates',
+        'title' => 'Unlock Legendary Evo Gun Tokens',
+        'subtitle' => 'Max out your MP40, AK47, and SCAR with fast server token crates.',
+        'link' => '/services?category=weapon-skin',
+        'link_text' => 'Explore Evo Guns'
+    ]
+];
+
 require_once __DIR__ . '/../../includes/user_header.php';
 require_once __DIR__ . '/../../includes/user_sidebar.php';
 ?>
@@ -47,63 +75,56 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
     <!-- Center Column (Hero Banner + Categories + Popular Services) -->
     <div class="flex-1 min-w-0 space-y-6">
         
-        <!-- Hero Banner Carousel (Exact Reference UI) -->
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#170E16] via-[#1F101A] to-[#2B0E17] border border-rose-500/30 p-6 sm:p-8 lg:p-10 shadow-2xl">
-            <!-- Background Artwork Glow -->
-            <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-500 via-transparent to-transparent"></div>
+        <!-- Hero Multi-Banner Responsive Carousel (2-3 Banners) -->
+        <div id="dashboardBannerCarousel" class="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-rose-500/30 shadow-2xl group min-h-[200px] sm:min-h-[250px] lg:min-h-[280px]">
+            <!-- Slides Track -->
+            <div id="bannerSlidesTrack" class="flex transition-transform duration-500 ease-out w-full h-full">
+                <?php foreach ($dashboardBanners as $idx => $b): ?>
+                    <div class="banner-slide min-w-full shrink-0 relative overflow-hidden flex items-center p-5 sm:p-8 lg:p-10 min-h-[200px] sm:min-h-[250px] lg:min-h-[280px]">
+                        <!-- Actual Banner Graphic as Background Image -->
+                        <img src="<?= htmlspecialchars($b['image']) ?>" alt="<?= htmlspecialchars($b['title']) ?>" class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none" loading="<?= $idx === 0 ? 'eager' : 'lazy' ?>">
+                        <!-- Ambient Scrim Overlay for WCAG Contrast -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#080B11]/90 via-[#080B11]/70 to-[#080B11]/25 pointer-events-none"></div>
 
-            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <!-- Banner Text Content -->
-                <div class="lg:col-span-7 space-y-4">
-                    <div class="inline-flex items-center gap-2 bg-[#FF2E51]/15 border border-[#FF2E51]/30 px-3 py-1 rounded-full text-[#FF2E51] text-[11px] font-bold tracking-wide">
-                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                        <span>Best Place For Free Fire Services</span>
-                    </div>
+                        <!-- Content Grid -->
+                        <div class="relative z-10 max-w-xl space-y-2 sm:space-y-3.5">
+                            <div class="inline-flex items-center gap-1.5 bg-[#FF2E51]/20 border border-[#FF2E51]/40 px-2.5 py-0.5 sm:py-1 rounded-full text-[#FF2E51] text-[10px] sm:text-[11px] font-bold tracking-wide uppercase">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#FF2E51] animate-pulse"></span>
+                                <span><?= htmlspecialchars($b['badge']) ?></span>
+                            </div>
 
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-                        Get Your <span class="text-[#FF2E51]">Free Fire</span><br>Services <span class="text-[#FF2E51]">Instantly</span>
-                    </h2>
+                            <h2 class="text-lg sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
+                                <?= htmlspecialchars($b['title']) ?>
+                            </h2>
 
-                    <p class="text-xs sm:text-sm text-slate-300 max-w-md leading-relaxed">
-                        Diamonds, Memberships, Elite Pass, UID, and more — all at the best prices.
-                    </p>
+                            <p class="text-[11px] sm:text-xs lg:text-sm text-slate-300 leading-relaxed max-w-md">
+                                <?= htmlspecialchars($b['subtitle']) ?>
+                            </p>
 
-                    <div class="pt-2">
-                        <a href="/user/services.php" class="inline-flex items-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-xs py-3 px-6 rounded-xl shadow-lg shadow-rose-600/35 transition-all">
-                            <span>Explore Services</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Banner Right Visual Art (Reference UI) -->
-                <div class="lg:col-span-5 flex flex-col items-center lg:items-end text-center lg:text-right">
-                    <div class="relative py-2">
-                        <div class="font-gaming text-3xl sm:text-4xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-100 to-rose-400 uppercase drop-shadow-md">
-                            FREE FIRE
-                        </div>
-                        <div class="text-[11px] font-extrabold tracking-widest text-[#FF2E51] uppercase mt-0.5">
-                            TOP UP & GAME SERVICES
-                        </div>
-                        <div class="flex items-center justify-center lg:justify-end gap-2 text-[10px] text-slate-400 font-semibold mt-3">
-                            <span>Fast Delivery</span>
-                            <span>•</span>
-                            <span class="text-rose-400">Safe</span>
-                            <span>•</span>
-                            <span>24/7 Support</span>
+                            <div class="pt-1 sm:pt-2">
+                                <a href="<?= htmlspecialchars($b['link']) ?>" class="inline-flex items-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-xs py-2 sm:py-2.5 px-4 sm:px-5 rounded-xl shadow-lg shadow-rose-600/30 transition-all">
+                                    <span><?= htmlspecialchars($b['link_text']) ?></span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
             </div>
 
-            <!-- Slider Dots (Reference UI) -->
-            <div class="flex items-center justify-center gap-2 mt-6">
-                <span class="w-6 h-1.5 rounded-full bg-[#FF2E51]"></span>
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
+            <!-- Previous & Next Controls (Responsive) -->
+            <button type="button" onclick="prevBannerSlide()" aria-label="Previous Banner" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-[#FF2E51] border border-white/20 text-white flex items-center justify-center transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 z-20 shadow-lg cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button type="button" onclick="nextBannerSlide()" aria-label="Next Banner" class="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-[#FF2E51] border border-white/20 text-white flex items-center justify-center transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 z-20 shadow-lg cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+
+            <!-- Navigation Indicators / Dots -->
+            <div class="absolute bottom-3 inset-x-0 flex items-center justify-center gap-1.5 z-20 pointer-events-auto">
+                <?php foreach ($dashboardBanners as $idx => $b): ?>
+                    <button type="button" onclick="goToBannerSlide(<?= $idx ?>)" aria-label="Slide <?= $idx + 1 ?>" class="banner-dot h-1.5 rounded-full transition-all cursor-pointer <?= $idx === 0 ? 'w-6 bg-[#FF2E51]' : 'w-2 bg-slate-600/80 hover:bg-slate-400' ?>"></button>
+                <?php endforeach; ?>
             </div>
         </div>
 
@@ -175,11 +196,13 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                         <div>
                             <!-- Visual Graphic Header based on Service Type -->
                             <div class="w-full h-28 rounded-xl bg-gradient-to-b from-[#141A2D] to-[#0A0D16] border border-slate-800 flex items-center justify-center relative overflow-hidden mb-3.5">
-                                <span class="absolute top-2 right-2 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-black/60 text-slate-400 border border-slate-700/60">
+                                <span class="absolute top-2 right-2 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-black/60 text-slate-400 border border-slate-700/60 z-10">
                                     FREE FIRE
                                 </span>
 
-                                <?php if (strpos(strtolower($service['title']), 'membership') !== false): ?>
+                                <?php if (!empty($service['image_url'])): ?>
+                                    <img src="<?= htmlspecialchars($service['image_url']) ?>" alt="<?= htmlspecialchars($service['title']) ?>" class="w-full h-full object-cover">
+                                <?php elseif (strpos(strtolower($service['title']), 'membership') !== false): ?>
                                     <div class="text-amber-400 flex flex-col items-center">
                                         <div class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center font-gaming text-2xl font-bold">
                                             <?= strpos(strtolower($service['title']), 'weekly') !== false ? 'W' : 'M' ?>
@@ -482,6 +505,70 @@ function filterServiceCards(catSlug) {
         }
     });
 }
+
+// Banner Carousel Controller
+let currentBannerIdx = 0;
+const totalBanners = <?= count($dashboardBanners) ?>;
+let bannerTimer = null;
+
+function updateBannerDisplay() {
+    const track = document.getElementById('bannerSlidesTrack');
+    if (track) {
+        track.style.transform = 'translateX(-' + (currentBannerIdx * 100) + '%)';
+    }
+    const dots = document.querySelectorAll('.banner-dot');
+    dots.forEach((dot, idx) => {
+        if (idx === currentBannerIdx) {
+            dot.className = 'banner-dot h-1.5 w-6 rounded-full bg-[#FF2E51] transition-all cursor-pointer';
+        } else {
+            dot.className = 'banner-dot h-1.5 w-2 rounded-full bg-slate-600/80 hover:bg-slate-400 transition-all cursor-pointer';
+        }
+    });
+}
+
+function nextBannerSlide() {
+    currentBannerIdx = (currentBannerIdx + 1) % totalBanners;
+    updateBannerDisplay();
+}
+
+function prevBannerSlide() {
+    currentBannerIdx = (currentBannerIdx - 1 + totalBanners) % totalBanners;
+    updateBannerDisplay();
+}
+
+function goToBannerSlide(idx) {
+    currentBannerIdx = idx;
+    updateBannerDisplay();
+    restartBannerTimer();
+}
+
+function startBannerTimer() {
+    stopBannerTimer();
+    bannerTimer = setInterval(nextBannerSlide, 5000);
+}
+
+function stopBannerTimer() {
+    if (bannerTimer) {
+        clearInterval(bannerTimer);
+        bannerTimer = null;
+    }
+}
+
+function restartBannerTimer() {
+    stopBannerTimer();
+    startBannerTimer();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('dashboardBannerCarousel');
+    if (carousel) {
+        carousel.addEventListener('mouseenter', stopBannerTimer);
+        carousel.addEventListener('mouseleave', startBannerTimer);
+        carousel.addEventListener('touchstart', stopBannerTimer, { passive: true });
+        carousel.addEventListener('touchend', startBannerTimer, { passive: true });
+        startBannerTimer();
+    }
+});
 </script>
 
 <?php require_once __DIR__ . '/../../includes/user_footer.php'; ?>

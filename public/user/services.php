@@ -103,12 +103,16 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                     <div>
                         <!-- Header Graphics -->
                         <div class="w-full h-28 rounded-xl bg-gradient-to-b from-[#141A2D] to-[#0A0D16] border border-slate-800 flex items-center justify-center relative overflow-hidden mb-3">
-                            <span class="absolute top-2 right-2 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-black/60 text-slate-400 border border-slate-700/60">
+                            <span class="absolute top-2 right-2 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-black/60 text-slate-400 border border-slate-700/60 z-10">
                                 FREE FIRE
                             </span>
-                            <div class="text-cyan-400 flex items-center gap-1">
-                                <svg class="w-10 h-10 drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 9l10 13 10-13-10-7zm0 3.2L18.4 9 12 18.5 5.6 9 12 5.2z"/></svg>
-                            </div>
+                            <?php if (!empty($service['image_url'])): ?>
+                                <img src="<?= htmlspecialchars($service['image_url']) ?>" alt="<?= htmlspecialchars($service['title']) ?>" class="w-full h-full object-cover">
+                            <?php else: ?>
+                                <div class="text-cyan-400 flex items-center gap-1">
+                                    <svg class="w-10 h-10 drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 9l10 13 10-13-10-7zm0 3.2L18.4 9 12 18.5 5.6 9 12 5.2z"/></svg>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <!-- Title & Description -->

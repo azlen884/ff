@@ -5,7 +5,7 @@ $db = getDbConnection();
 
 $orderId = (int)($_GET['id'] ?? 0);
 
-$stmt = $db->prepare("SELECT o.*, s.title as service_title, s.amount_description, s.delivery_time, c.name as category_name 
+$stmt = $db->prepare("SELECT o.*, s.title as service_title, s.amount_description, s.delivery_time, s.image_url, c.name as category_name 
                       FROM orders o 
                       JOIN services s ON o.service_id = s.id 
                       JOIN categories c ON s.category_id = c.id 
@@ -120,7 +120,12 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                 <div class="space-y-3 text-xs">
                     <div class="flex items-center justify-between pb-2 border-b border-slate-800">
                         <span class="text-slate-400">Item Purchased:</span>
-                        <strong class="text-white"><?= htmlspecialchars($order['service_title']) ?></strong>
+                        <div class="flex items-center gap-2">
+                            <?php if (!empty($order['image_url'])): ?>
+                                <img src="<?= htmlspecialchars($order['image_url']) ?>" alt="<?= htmlspecialchars($order['service_title']) ?>" class="w-6 h-6 rounded object-cover border border-slate-700 shrink-0">
+                            <?php endif; ?>
+                            <strong class="text-white"><?= htmlspecialchars($order['service_title']) ?></strong>
+                        </div>
                     </div>
                     <div class="flex items-center justify-between pb-2 border-b border-slate-800">
                         <span class="text-slate-400">Package Spec:</span>

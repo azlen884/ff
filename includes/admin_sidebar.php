@@ -9,10 +9,57 @@ $pendingOrdersCount = (int)$db->query("SELECT COUNT(*) FROM orders WHERE status 
 $pendingDepositsCount = (int)$db->query("SELECT COUNT(*) FROM payments WHERE status = 'pending'")->fetchColumn();
 $unreadAlertsCount = getUnreadNotificationCount(null, 'admin');
 ?>
-<!-- Admin Sidebar -->
-<aside class="w-full lg:w-64 shrink-0 flex flex-col gap-5">
+<!-- Admin Sidebar (Compact Horizontal Navigation on Mobile, Full Vertical Sidebar on Desktop) -->
+<aside class="w-full lg:w-64 shrink-0 flex flex-col gap-2.5 lg:gap-5">
     
-    <div class="bg-[#0F1422] border border-slate-800/80 rounded-2xl p-3 space-y-1 shadow-xl">
+    <!-- Mobile Compact Horizontal Navigation Strip (lg:hidden) -->
+    <div class="lg:hidden w-full bg-[#0F1422] border border-slate-800/80 rounded-xl p-1.5 shadow-md">
+        <div class="flex items-center gap-1 overflow-x-auto scrollbar-none py-0.5 px-0.5">
+            <a href="/admin" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'dashboard' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>⚡ Dashboard</span>
+            </a>
+            <a href="/admin/orders" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'orders' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>📦 Orders</span>
+                <?php if ($pendingOrdersCount > 0): ?><span class="bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded text-[9px] font-bold"><?= $pendingOrdersCount ?></span><?php endif; ?>
+            </a>
+            <a href="/admin/payments" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'payments' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>💳 Deposits</span>
+                <?php if ($pendingDepositsCount > 0): ?><span class="bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded text-[9px] font-bold"><?= $pendingDepositsCount ?></span><?php endif; ?>
+            </a>
+            <a href="/admin/wallet-transactions" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'wallet-transactions' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>💼 Ledger</span>
+            </a>
+            <a href="/admin/services" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'services' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>💎 Services</span>
+            </a>
+            <a href="/admin/gateways" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'gateways' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>🏦 Gateways</span>
+            </a>
+            <a href="/admin/providers" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'providers' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>🔌 Providers</span>
+            </a>
+            <a href="/admin/coupons" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'coupons' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>🎟️ Coupons</span>
+            </a>
+            <a href="/admin/users" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'users' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>👥 Users</span>
+            </a>
+            <a href="/admin/referrals" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'referrals' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>🤝 Referrals</span>
+            </a>
+            <a href="/admin/notifications" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'notifications' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>🔔 Alerts</span>
+                <?php if ($unreadAlertsCount > 0): ?><span class="bg-[#FF2E51] text-white px-1.5 py-0.5 rounded-full text-[9px] font-bold"><?= $unreadAlertsCount ?></span><?php endif; ?>
+            </a>
+            <a href="/admin/settings" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-colors <?= $activeNav === 'settings' ? 'bg-rose-600 text-white shadow-sm' : 'bg-[#141A2E] text-slate-300 hover:text-white' ?>">
+                <span>⚙️ Settings</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Desktop Full Vertical Sidebar (Exact Reference UI, hidden on mobile) -->
+    <div class="hidden lg:flex lg:flex-col gap-5">
+        <div class="bg-[#0F1422] border border-slate-800/80 rounded-2xl p-3 space-y-1 shadow-xl">
         
         <div class="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Operations</div>
 
@@ -150,6 +197,8 @@ $unreadAlertsCount = getUnreadNotificationCount(null, 'admin');
             <span>Security</span>
             <span class="text-emerald-400 font-semibold">Row Lock & PDO</span>
         </div>
+    </div>
+
     </div>
 
 </aside>

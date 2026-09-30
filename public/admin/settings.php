@@ -25,6 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'default_provider' => trim($_POST['default_provider'] ?? 'garena_direct'),
         'referral_enabled' => !empty($_POST['referral_enabled']) ? '1' : '0',
         'referral_commission_percent' => trim($_POST['referral_commission_percent'] ?? '5.00'),
+        'banner_1_image' => trim($_POST['banner_1_image'] ?? '/images/banners/banner_diamonds.svg'),
+        'banner_2_image' => trim($_POST['banner_2_image'] ?? '/images/banners/banner_membership.svg'),
+        'banner_3_image' => trim($_POST['banner_3_image'] ?? '/images/banners/banner_evogun.svg'),
     ];
 
     $stmt = $db->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value), updated_at = NOW()");
@@ -102,6 +105,32 @@ require_once __DIR__ . '/../../includes/admin_header.php';
                             <label class="block text-xs font-semibold text-slate-300 mb-1.5">Global Header Announcement Banner</label>
                             <textarea name="announcement" rows="2" class="w-full bg-[#13192A] border border-slate-700/80 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-rose-500"><?= htmlspecialchars($settings['announcement'] ?? '') ?></textarea>
                             <span class="text-[10px] text-slate-500 mt-1 block">Displayed on top of the public store and user dashboard.</span>
+                        </div>
+                    </div>
+
+                    <!-- Section: User Dashboard Banners (2-3 Banners) -->
+                    <div class="space-y-4 pt-2">
+                        <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2 flex items-center gap-2">
+                            <span>🖼️</span>
+                            <span>User Dashboard Banners (Carousel)</span>
+                        </h3>
+
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1.5">Banner 1 Graphic Image URL</label>
+                                <input type="text" name="banner_1_image" value="<?= htmlspecialchars($settings['banner_1_image'] ?? '/images/banners/banner_diamonds.svg') ?>" class="w-full bg-[#13192A] border border-slate-700/80 rounded-xl px-4 py-2 text-xs text-white font-mono">
+                                <span class="text-[10px] text-slate-500">Default: /images/banners/banner_diamonds.svg (Diamonds Top-Up)</span>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1.5">Banner 2 Graphic Image URL</label>
+                                <input type="text" name="banner_2_image" value="<?= htmlspecialchars($settings['banner_2_image'] ?? '/images/banners/banner_membership.svg') ?>" class="w-full bg-[#13192A] border border-slate-700/80 rounded-xl px-4 py-2 text-xs text-white font-mono">
+                                <span class="text-[10px] text-slate-500">Default: /images/banners/banner_membership.svg (Memberships)</span>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1.5">Banner 3 Graphic Image URL</label>
+                                <input type="text" name="banner_3_image" value="<?= htmlspecialchars($settings['banner_3_image'] ?? '/images/banners/banner_evogun.svg') ?>" class="w-full bg-[#13192A] border border-slate-700/80 rounded-xl px-4 py-2 text-xs text-white font-mono">
+                                <span class="text-[10px] text-slate-500">Default: /images/banners/banner_evogun.svg (Evo Gun Tokens & Crates)</span>
+                            </div>
                         </div>
                     </div>
 
