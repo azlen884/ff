@@ -49,26 +49,26 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                 Real-time tracking of all Free Fire diamond top-ups and passes placed on your account.
             </p>
         </div>
-        <a href="/user/services.php" class="inline-flex items-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-rose-600/30 transition-all self-start sm:self-auto">
+        <a href="/services" class="inline-flex items-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-rose-600/30 transition-all self-start sm:self-auto">
             <span>+ Place New Order</span>
         </a>
     </div>
 
     <!-- Filter Tabs -->
     <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-        <a href="/user/orders.php" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= empty($statusFilter) ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
+        <a href="/orders" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= empty($statusFilter) ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
             All (<?= $totalUserOrders ?>)
         </a>
-        <a href="/user/orders.php?status=completed" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $statusFilter === 'completed' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
+        <a href="/orders?status=completed" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $statusFilter === 'completed' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
             Completed (<?= $statusCounts['completed'] ?>)
         </a>
-        <a href="/user/orders.php?status=processing" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $statusFilter === 'processing' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
+        <a href="/orders?status=processing" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $statusFilter === 'processing' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
             Processing (<?= $statusCounts['processing'] ?>)
         </a>
-        <a href="/user/orders.php?status=pending" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $statusFilter === 'pending' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
+        <a href="/orders?status=pending" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $statusFilter === 'pending' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
             Pending (<?= $statusCounts['pending'] ?>)
         </a>
-        <a href="/user/orders.php?status=cancelled" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $statusFilter === 'cancelled' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
+        <a href="/orders?status=cancelled" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $statusFilter === 'cancelled' ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
             Cancelled (<?= $statusCounts['cancelled'] ?>)
         </a>
     </div>
@@ -76,10 +76,14 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
     <!-- Orders Content -->
     <?php if (empty($orders)): ?>
         <div class="bg-[#0D121F] border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
-            <div class="w-12 h-12 mx-auto rounded-full bg-slate-800/80 flex items-center justify-center text-slate-500 mb-3 text-xl">📦</div>
+            <div class="w-12 h-12 mx-auto rounded-full bg-slate-800/80 flex items-center justify-center text-slate-400 mb-3">
+                <svg class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+            </div>
             <h4 class="text-base font-bold text-white mb-1">No orders found</h4>
             <p class="text-xs">You have not placed any orders under this filter.</p>
-            <a href="/user/services.php" class="inline-block mt-4 text-xs font-bold text-rose-400 hover:text-rose-300">Browse Free Fire Services →</a>
+            <a href="/services" class="inline-block mt-4 text-xs font-bold text-rose-400 hover:text-rose-300">Browse Free Fire Services →</a>
         </div>
     <?php else: ?>
         <div class="bg-[#0D121F] border border-slate-800/90 rounded-2xl overflow-hidden shadow-xl">

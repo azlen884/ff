@@ -33,29 +33,27 @@ $unreadCount = getUnreadNotificationCount($currentUser['id'], 'user');
 $activeNav = 'notifications';
 $activeSidebar = 'notifications';
 require_once __DIR__ . '/../../includes/user_header.php';
+require_once __DIR__ . '/../../includes/user_sidebar.php';
 ?>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col lg:flex-row gap-8">
-        
-        <!-- Sidebar Navigation -->
-        <div class="w-full lg:w-64 shrink-0">
-            <?php require_once __DIR__ . '/../../includes/user_sidebar.php'; ?>
+<main class="flex-1 min-w-0 space-y-6">
+
+    <!-- Flash Message -->
+    <?php $flash = getFlash(); if ($flash): ?>
+        <div role="alert" class="p-4 rounded-2xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40' : ($flash['type'] === 'info' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-rose-950/80 text-rose-300 border border-rose-500/40') ?>">
+            <div class="flex items-center gap-2.5">
+                <?php if ($flash['type'] === 'success'): ?>
+                    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <?php elseif ($flash['type'] === 'info'): ?>
+                    <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <?php else: ?>
+                    <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <?php endif; ?>
+                <span><?= htmlspecialchars($flash['message']) ?></span>
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
         </div>
-
-        <!-- Main Content Area -->
-        <div class="flex-1 space-y-6">
-
-            <!-- Flash Message -->
-            <?php $flash = getFlash(); if ($flash): ?>
-                <div role="alert" class="p-4 rounded-2xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40' : ($flash['type'] === 'info' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-rose-950/80 text-rose-300 border border-rose-500/40') ?>">
-                    <div class="flex items-center gap-2.5">
-                        <span><?= $flash['type'] === 'success' ? '✅' : ($flash['type'] === 'info' ? 'ℹ️' : '⚠️') ?></span>
-                        <span><?= htmlspecialchars($flash['message']) ?></span>
-                    </div>
-                    <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
-                </div>
-            <?php endif; ?>
+    <?php endif; ?>
 
             <!-- Header -->
             <div class="flex items-center justify-between">
@@ -86,8 +84,10 @@ require_once __DIR__ . '/../../includes/user_header.php';
             <div class="space-y-3">
                 <?php if (empty($notifications)): ?>
                     <div class="bg-[#0D121F] border border-slate-800/80 rounded-2xl p-12 text-center space-y-3 shadow-xl">
-                        <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-800 flex items-center justify-center text-slate-500 text-xl">
-                            🔔
+                        <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-800/80 flex items-center justify-center text-slate-500">
+                            <svg class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
                         </div>
                         <h3 class="text-sm font-bold text-white">No Notifications Yet</h3>
                         <p class="text-xs text-slate-500 max-w-sm mx-auto">When your orders are processed or deposits approved, updates will appear right here.</p>
@@ -98,7 +98,15 @@ require_once __DIR__ . '/../../includes/user_header.php';
                             
                             <div class="flex items-start gap-3.5">
                                 <div class="w-9 h-9 shrink-0 rounded-xl flex items-center justify-center text-sm font-bold <?= $n['type'] === 'success' ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' : ($n['type'] === 'warning' ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30' : ($n['type'] === 'error' ? 'bg-rose-500/15 text-rose-400 border border-rose-500/30' : 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/30')) ?>">
-                                    <?= $n['type'] === 'success' ? '✓' : ($n['type'] === 'warning' ? '⏳' : ($n['type'] === 'error' ? '!' : 'ℹ')) ?>
+                                    <?php if ($n['type'] === 'success'): ?>
+                                        <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <?php elseif ($n['type'] === 'warning'): ?>
+                                        <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <?php elseif ($n['type'] === 'error'): ?>
+                                        <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    <?php else: ?>
+                                        <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div class="space-y-1">
@@ -138,7 +146,6 @@ require_once __DIR__ . '/../../includes/user_header.php';
 
         </div>
 
-    </div>
-</div>
+</main>
 
 <?php require_once __DIR__ . '/../../includes/user_footer.php'; ?>

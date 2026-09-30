@@ -64,7 +64,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
 
         <!-- Search Bar -->
         <div class="w-full md:w-80">
-            <form action="/user/services.php" method="GET" class="relative">
+            <form action="/services" method="GET" class="relative">
                 <?php if ($selectedCategory): ?>
                     <input type="hidden" name="category" value="<?= htmlspecialchars($selectedCategory) ?>">
                 <?php endif; ?>
@@ -78,11 +78,11 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
 
     <!-- Category Filter Tabs -->
     <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-        <a href="/user/services.php" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= empty($selectedCategory) ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
+        <a href="/services" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= empty($selectedCategory) ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
             All Services (<?= count($services) ?>)
         </a>
         <?php foreach ($categories as $cat): ?>
-            <a href="/user/services.php?category=<?= urlencode($cat['slug']) ?>" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $selectedCategory === $cat['slug'] ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
+            <a href="/services?category=<?= urlencode($cat['slug']) ?>" class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all <?= $selectedCategory === $cat['slug'] ? 'bg-[#FF2E51] text-white shadow-md shadow-rose-600/30' : 'bg-[#0D121F] border border-slate-800 text-slate-400 hover:text-white' ?>">
                 <?= htmlspecialchars($cat['name']) ?>
             </a>
         <?php endforeach; ?>
@@ -91,10 +91,14 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
     <!-- Services Grid -->
     <?php if (empty($services)): ?>
         <div class="bg-[#0D121F] border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
-            <div class="w-12 h-12 mx-auto rounded-full bg-slate-800/80 flex items-center justify-center text-slate-500 mb-3 text-xl">🔍</div>
+            <div class="w-12 h-12 mx-auto rounded-full bg-slate-800/80 flex items-center justify-center text-slate-400 mb-3">
+                <svg class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
             <h4 class="text-base font-bold text-white mb-1">No services found</h4>
             <p class="text-xs">Try selecting another category or clear your search keyword.</p>
-            <a href="/user/services.php" class="inline-block mt-4 text-xs font-bold text-rose-400 hover:text-rose-300">View All Services →</a>
+            <a href="/services" class="inline-block mt-4 text-xs font-bold text-rose-400 hover:text-rose-300">View All Services →</a>
         </div>
     <?php else: ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

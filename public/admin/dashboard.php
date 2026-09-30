@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $update->execute([$newStatus, $orderId]);
         setFlash('success', "Order #{$orderId} status changed to {$newStatus}.");
     }
-    header('Location: /admin/dashboard.php');
+    header('Location: /admin');
     exit;
 }
 
@@ -51,12 +51,12 @@ require_once __DIR__ . '/../../includes/admin_sidebar.php';
         <div class="bg-[#0F1422] border border-slate-800/90 rounded-2xl p-5 shadow-xl">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-400">Total Revenue</span>
-                <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 text-xs font-bold">₹ INR</span>
+                <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 text-xs font-bold font-mono">₹ INR</span>
             </div>
             <div class="mt-3">
                 <div class="text-2xl font-black text-white"><?= formatCurrency($totalRevenue) ?></div>
                 <div class="text-[11px] text-emerald-400 mt-1 flex items-center gap-1">
-                    <span>✓</span> Verified from completed MySQL transactions
+                    <span>✓</span> Verified from completed orders
                 </div>
             </div>
         </div>
@@ -65,7 +65,9 @@ require_once __DIR__ . '/../../includes/admin_sidebar.php';
         <div class="bg-[#0F1422] border border-slate-800/90 rounded-2xl p-5 shadow-xl">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-400">Total Orders</span>
-                <span class="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 text-xs font-bold">📦</span>
+                <div class="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                </div>
             </div>
             <div class="mt-3">
                 <div class="text-2xl font-black text-white"><?= $totalOrders ?></div>
@@ -79,7 +81,9 @@ require_once __DIR__ . '/../../includes/admin_sidebar.php';
         <div class="bg-[#0F1422] border border-slate-800/90 rounded-2xl p-5 shadow-xl">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-400">Pending Review</span>
-                <span class="p-2 rounded-xl bg-amber-500/10 text-amber-400 text-xs font-bold">⏳</span>
+                <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
             </div>
             <div class="mt-3">
                 <div class="text-2xl font-black <?= $pendingOrders > 0 ? 'text-amber-400' : 'text-white' ?>"><?= $pendingOrders ?></div>
@@ -93,7 +97,9 @@ require_once __DIR__ . '/../../includes/admin_sidebar.php';
         <div class="bg-[#0F1422] border border-slate-800/90 rounded-2xl p-5 shadow-xl">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-400">Registered Users</span>
-                <span class="p-2 rounded-xl bg-rose-500/10 text-rose-400 text-xs font-bold">👤</span>
+                <div class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </div>
             </div>
             <div class="mt-3">
                 <div class="text-2xl font-black text-white"><?= $totalUsers ?></div>
@@ -112,7 +118,7 @@ require_once __DIR__ . '/../../includes/admin_sidebar.php';
                 <h3 class="text-base font-bold text-white">Recent Top-Up Orders</h3>
                 <p class="text-xs text-slate-400">Manage real customer Free Fire UID orders and update fulfillment status.</p>
             </div>
-            <a href="/admin/orders.php" class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300">
+            <a href="/admin/orders" class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300">
                 <span>View Full Order Management →</span>
             </a>
         </div>
@@ -163,7 +169,7 @@ require_once __DIR__ . '/../../includes/admin_sidebar.php';
                                 </span>
                             </td>
                             <td class="py-3 px-4 text-right">
-                                <form action="/admin/dashboard.php" method="POST" class="inline-flex items-center gap-1.5">
+                                <form action="/admin" method="POST" class="inline-flex items-center gap-1.5">
                                     <?= csrfField() ?>
                                     <input type="hidden" name="action" value="quick_status">
                                     <input type="hidden" name="order_id" value="<?= $order['id'] ?>">

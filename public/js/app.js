@@ -64,12 +64,13 @@ function copyToClipboard(text, message) {
 // Global Helper: Mini Toast
 function showToast(msg) {
     const toast = document.createElement('div');
-    toast.className = 'fixed bottom-5 right-5 z-50 bg-[#161D32] border border-rose-500/40 text-white text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2';
-    toast.innerHTML = '<span>⚡</span> <span>' + msg + '</span>';
+    toast.className = 'fixed bottom-5 right-5 z-50 bg-[#161D32] border border-rose-500/40 text-white text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 transition-all';
+    toast.innerHTML = '<svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> <span class="font-medium">' + msg + '</span>';
     document.body.appendChild(toast);
     setTimeout(function() {
-        toast.style.transition = 'opacity 0.4s ease';
+        toast.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
         toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
         setTimeout(function() { toast.remove(); }, 400);
     }, 3000);
 }

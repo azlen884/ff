@@ -40,29 +40,27 @@ $totalDebits = (float)$db->query("SELECT COALESCE(SUM(amount), 0) FROM wallet_tr
 
 $activeNav = 'wallet-transactions';
 require_once __DIR__ . '/../../includes/admin_header.php';
+require_once __DIR__ . '/../../includes/admin_sidebar.php';
 ?>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col lg:flex-row gap-8">
-        
-        <!-- Sidebar Navigation -->
-        <div class="w-full lg:w-64 shrink-0">
-            <?php require_once __DIR__ . '/../../includes/admin_sidebar.php'; ?>
+<main class="flex-1 min-w-0 space-y-6">
+
+    <!-- Flash Message -->
+    <?php $flash = getFlash(); if ($flash): ?>
+        <div role="alert" class="p-4 rounded-2xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40' : ($flash['type'] === 'info' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-rose-950/80 text-rose-300 border border-rose-500/40') ?>">
+            <div class="flex items-center gap-2.5">
+                <?php if ($flash['type'] === 'success'): ?>
+                    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <?php elseif ($flash['type'] === 'info'): ?>
+                    <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <?php else: ?>
+                    <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <?php endif; ?>
+                <span><?= htmlspecialchars($flash['message']) ?></span>
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
         </div>
-
-        <!-- Main Content Area -->
-        <div class="flex-1 space-y-6">
-
-            <!-- Flash Message -->
-            <?php $flash = getFlash(); if ($flash): ?>
-                <div role="alert" class="p-4 rounded-2xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40' : ($flash['type'] === 'info' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-rose-950/80 text-rose-300 border border-rose-500/40') ?>">
-                    <div class="flex items-center gap-2.5">
-                        <span><?= $flash['type'] === 'success' ? '✅' : ($flash['type'] === 'info' ? 'ℹ️' : '⚠️') ?></span>
-                        <span><?= htmlspecialchars($flash['message']) ?></span>
-                    </div>
-                    <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
-                </div>
-            <?php endif; ?>
+    <?php endif; ?>
 
             <!-- Header -->
             <div class="flex items-center justify-between">
@@ -163,9 +161,6 @@ require_once __DIR__ . '/../../includes/admin_header.php';
                 <?php endif; ?>
             </div>
 
-        </div>
-
-    </div>
-</div>
+</main>
 
 <?php require_once __DIR__ . '/../../includes/admin_footer.php'; ?>

@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $db->prepare("UPDATE users SET name = ?, phone = ? WHERE id = ?");
             $stmt->execute([$name, $phone, $currentUser['id']]);
             setFlash('success', 'Profile details updated successfully.');
-            header('Location: /user/profile.php');
+            header('Location: /profile');
             exit;
         }
     }
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $db->prepare("UPDATE users SET password = ? WHERE id = ?");
             $stmt->execute([$hash, $currentUser['id']]);
             setFlash('success', 'Password updated successfully!');
-            header('Location: /user/profile.php');
+            header('Location: /profile');
             exit;
         }
     }
@@ -110,7 +110,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
         <!-- Personal Details -->
         <div class="bg-[#0D121F] border border-slate-800/90 rounded-2xl p-6 sm:p-7 shadow-xl space-y-4">
             <h3 class="text-sm font-bold text-white">Personal Information</h3>
-            <form action="/user/profile.php" method="POST" class="space-y-4">
+            <form action="/profile" method="POST" class="space-y-4">
                 <?= csrfField() ?>
                 <input type="hidden" name="action" value="update_profile">
 
@@ -141,7 +141,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
         <!-- Security & Password -->
         <div class="bg-[#0D121F] border border-slate-800/90 rounded-2xl p-6 sm:p-7 shadow-xl space-y-4">
             <h3 class="text-sm font-bold text-white">Security & Password</h3>
-            <form action="/user/profile.php" method="POST" class="space-y-4">
+            <form action="/profile" method="POST" class="space-y-4">
                 <?= csrfField() ?>
                 <input type="hidden" name="action" value="change_password">
 

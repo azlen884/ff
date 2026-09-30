@@ -39,29 +39,27 @@ $commissions = $commStmt->fetchAll();
 $activeNav = 'referrals';
 $activeSidebar = 'referrals';
 require_once __DIR__ . '/../../includes/user_header.php';
+require_once __DIR__ . '/../../includes/user_sidebar.php';
 ?>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col lg:flex-row gap-8">
-        
-        <!-- Sidebar Navigation -->
-        <div class="w-full lg:w-64 shrink-0">
-            <?php require_once __DIR__ . '/../../includes/user_sidebar.php'; ?>
+<main class="flex-1 min-w-0 space-y-6">
+
+    <!-- Flash Message -->
+    <?php $flash = getFlash(); if ($flash): ?>
+        <div role="alert" class="p-4 rounded-2xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40' : ($flash['type'] === 'info' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-rose-950/80 text-rose-300 border border-rose-500/40') ?>">
+            <div class="flex items-center gap-2.5">
+                <?php if ($flash['type'] === 'success'): ?>
+                    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <?php elseif ($flash['type'] === 'info'): ?>
+                    <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <?php else: ?>
+                    <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <?php endif; ?>
+                <span><?= htmlspecialchars($flash['message']) ?></span>
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
         </div>
-
-        <!-- Main Content Area -->
-        <div class="flex-1 space-y-6">
-
-            <!-- Flash Message -->
-            <?php $flash = getFlash(); if ($flash): ?>
-                <div role="alert" class="p-4 rounded-2xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40' : ($flash['type'] === 'info' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-rose-950/80 text-rose-300 border border-rose-500/40') ?>">
-                    <div class="flex items-center gap-2.5">
-                        <span><?= $flash['type'] === 'success' ? '✅' : ($flash['type'] === 'info' ? 'ℹ️' : '⚠️') ?></span>
-                        <span><?= htmlspecialchars($flash['message']) ?></span>
-                    </div>
-                    <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
-                </div>
-            <?php endif; ?>
+    <?php endif; ?>
 
             <!-- Hero Referral Card -->
             <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#161D32] via-[#101526] to-[#0A0E18] border border-rose-500/25 p-6 sm:p-8 shadow-2xl space-y-6">
@@ -69,7 +67,9 @@ require_once __DIR__ . '/../../includes/user_header.php';
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div class="space-y-2 max-w-xl">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                            <span>🎁</span>
+                            <svg class="w-3.5 h-3.5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                            </svg>
                             <span>Earn <?= $commissionPercent ?>% Lifetime Cash Commission</span>
                         </div>
                         <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Invite Friends & Earn Real Wallet Cash</h1>

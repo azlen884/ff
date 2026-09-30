@@ -132,7 +132,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
         <div class="space-y-3.5">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
-                    <span class="text-rose-500">🔥</span>
+                    <svg class="w-4 h-4 text-rose-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 23c-4.97 0-9-4.03-9-9 0-4.03 2.76-7.85 6.13-10.37.52-.39 1.25-.09 1.37.54.34 1.76 1.13 3.39 2.26 4.67.24.27.67.17.78-.17.65-2.02 2.01-3.76 3.73-4.98.53-.38 1.27-.05 1.36.6.38 2.68 1.51 5.16 3.23 7.07 1.48 1.64 2.14 3.76 2.14 5.64 0 4.97-4.03 9-9 9z"/></svg>
                     <h3 class="text-sm font-bold text-white tracking-wide">Shop by Category</h3>
                 </div>
                 <a href="/services" class="text-xs font-semibold text-rose-400 hover:text-rose-300 flex items-center gap-1">
@@ -158,7 +158,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                 foreach ($categories as $cat):
                     $icon = $categoryIcons[$cat['slug']] ?? '<svg class="w-5 h-5 text-rose-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 9l10 13 10-13-10-7z"/></svg>';
                 ?>
-                    <a href="/user/services.php?category=<?= urlencode($cat['slug']) ?>" class="group bg-[#0D121F] border border-slate-800/90 hover:border-rose-500/50 rounded-2xl p-3 flex flex-col items-center justify-center text-center transition-all hover:scale-105 shadow-md">
+                    <a href="/services?category=<?= urlencode($cat['slug']) ?>" class="group bg-[#0D121F] border border-slate-800/90 hover:border-rose-500/50 rounded-2xl p-3 flex flex-col items-center justify-center text-center transition-all hover:scale-105 shadow-md">
                         <div class="w-10 h-10 rounded-xl bg-[#13192A] border border-slate-700/60 flex items-center justify-center mb-2 group-hover:border-rose-500/40 transition-colors">
                             <?= $icon ?>
                         </div>
@@ -172,7 +172,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
         <div class="space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
                 <div class="flex items-center gap-2">
-                    <span class="text-rose-500">★</span>
+                    <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     <div>
                         <h3 class="text-sm font-bold text-white tracking-wide">Popular Services</h3>
                         <p class="text-[11px] text-slate-400">Most purchased services by our customers</p>
@@ -339,11 +339,11 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
             
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <span class="text-rose-500">👤</span>
+                    <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     <h3 class="text-sm font-bold text-white">Live Order Activity</h3>
                     <span class="bg-[#FF2E51] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse">Live</span>
                 </div>
-                <a href="/user/orders.php" class="text-xs font-semibold text-rose-400 hover:text-rose-300">View All →</a>
+                <a href="/orders" class="text-xs font-semibold text-rose-400 hover:text-rose-300">View All →</a>
             </div>
 
             <!-- List of Live Purchases -->
@@ -379,16 +379,16 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                 <h4 class="text-sm font-bold text-white leading-tight">
                     Save More<br>With <span class="text-[#FF2E51]">Coupons!</span>
                 </h4>
-                <div class="w-12 h-12 rounded-xl bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-rose-400 text-xl">
-                    🎁
+                <div class="w-12 h-12 rounded-xl bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                    <svg class="w-6 h-6 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V4a2 2 0 112 2h-2zm0 0V4a2 2 0 10-2 2h2zm-7 4h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2a1 1 0 011-1zm2 4h10v5a1 1 0 01-1 1H8a1 1 0 01-1-1v-5z"></path></svg>
                 </div>
             </div>
 
             <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">
-                Use latest offers and get amazing discounts on every order.
+                Use latest promo offers and get amazing instant discounts on every diamond order.
             </p>
 
-            <button type="button" onclick="alert('Coupon FF10 applied! Get ₹10 flat off at checkout.')" class="w-full inline-flex items-center justify-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-rose-600/30 transition-all">
+            <button type="button" onclick="showToast('Active coupon available: FF10 gives flat discount at checkout!')" class="w-full inline-flex items-center justify-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-rose-600/30 transition-all cursor-pointer">
                 <span>View Coupons</span>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>

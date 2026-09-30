@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 setFlash('info', "Deducted " . formatCurrency($amount) . " from user wallet.");
             }
         }
-        header('Location: /admin/users.php');
+        header('Location: /admin/users');
         exit;
     }
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $stmt = $db->prepare("UPDATE users SET status = IF(status = 'active', 'suspended', 'active') WHERE id = ? AND role != 'admin'");
         $stmt->execute([$userId]);
         setFlash('info', "Customer account status updated.");
-        header('Location: /admin/users.php');
+        header('Location: /admin/users');
         exit;
     }
 }
@@ -105,7 +105,7 @@ require_once __DIR__ . '/../../includes/admin_sidebar.php';
                                 <?= (int)$u['uid_count'] ?> UIDs
                             </td>
                             <td class="py-3.5 px-4">
-                                <form action="/admin/users.php" method="POST" class="inline">
+                                <form action="/admin/users" method="POST" class="inline">
                                     <?= csrfField() ?>
                                     <input type="hidden" name="action" value="toggle_status">
                                     <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
@@ -138,7 +138,7 @@ require_once __DIR__ . '/../../includes/admin_sidebar.php';
             <button type="button" onclick="closeWalletModal()" class="text-slate-400 hover:text-white text-lg">&times;</button>
         </div>
 
-        <form action="/admin/users.php" method="POST" class="space-y-4">
+        <form action="/admin/users" method="POST" class="space-y-4">
             <?= csrfField() ?>
             <input type="hidden" name="action" value="adjust_wallet">
             <input type="hidden" name="user_id" id="modal_user_id" value="">

@@ -52,27 +52,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="min-h-full flex items-center justify-center p-4 bg-gradient-to-b from-[#0F1422] to-[#0A0D14] antialiased">
     <div class="max-w-md w-full space-y-6">
         
+        <!-- Header -->
         <div class="text-center space-y-2">
-            <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-rose-600 to-red-800 flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-rose-600/30">
-                ⚡
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-rose-600 to-red-800 flex items-center justify-center text-white shadow-xl shadow-rose-600/30">
+                <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
             </div>
             <h1 class="text-2xl font-black text-white tracking-tight uppercase">Admin Console</h1>
             <p class="text-xs text-slate-400">Restricted staff authentication for store operators.</p>
-        </div>
-
-        <!-- Quick Demo Credentials for Fast Evaluation -->
-        <div class="bg-rose-500/10 border border-rose-500/25 rounded-2xl p-4 text-xs text-slate-300 space-y-2">
-            <div class="flex items-center justify-between">
-                <span class="font-bold text-rose-400 flex items-center gap-1.5">
-                    <span>⚡</span> <span>Master Administrator:</span>
-                </span>
-                <button type="button" onclick="document.getElementById('email').value='admin@ffpanel.com'; document.getElementById('password').value='AdminPassword123!';" class="text-[11px] text-white bg-rose-600/80 hover:bg-rose-600 px-2 py-0.5 rounded font-semibold transition-colors">
-                    Auto-Fill Credentials
-                </button>
-            </div>
-            <div class="font-mono text-[11px] text-slate-300">
-                Email: <span class="text-white font-semibold">admin@ffpanel.com</span> | Pass: <span class="text-white font-semibold">AdminPassword123!</span>
-            </div>
         </div>
 
         <?php if ($error): ?>
@@ -88,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div>
                     <label for="email" class="block text-xs font-semibold text-slate-300 mb-1.5">Admin Email</label>
-                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? 'admin@ffpanel.com') ?>" required class="w-full bg-[#161D32] border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-rose-500 transition-colors">
+                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required class="w-full bg-[#161D32] border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-rose-500 transition-colors" placeholder="admin@domain.com">
                 </div>
 
                 <div>
@@ -105,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
 
             <div class="mt-6 pt-4 border-t border-slate-800 text-center">
-                <a href="/login.php" class="text-xs text-slate-400 hover:text-white transition-colors">← Return to Customer Login</a>
+                <a href="/login" class="text-xs text-slate-400 hover:text-white transition-colors">← Return to Customer Login</a>
             </div>
         </div>
 

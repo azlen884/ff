@@ -221,4 +221,4 @@ $flash = getFlash();
     </script>
 
     <!-- App Body Container: Sidebar + Main Content -->
-    <div class="w-full flex-1 flex flex-col lg:flex-row px-3 sm:px-4 lg:px-8 py-3 sm:py-6 gap-3 sm:gap-6">
+    <div class="max-w-7xl mx-auto w-full flex-1 flex flex-col lg:flex-row px-3 sm:px-4 lg:px-8 py-3 sm:py-6 gap-3 sm:gap-6">

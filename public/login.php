@@ -48,21 +48,6 @@ require_once __DIR__ . '/../includes/landing_header.php';
             <p class="text-xs text-slate-400">Access your saved Free Fire UIDs, order logs, and wallet balance.</p>
         </div>
 
-        <!-- Quick Demo Credentials Box for Testing -->
-        <div class="bg-rose-500/10 border border-rose-500/25 rounded-2xl p-4 text-xs text-slate-300 space-y-2">
-            <div class="flex items-center justify-between">
-                <span class="font-bold text-rose-400 flex items-center gap-1.5">
-                    <span>⚡</span> <span>Demo Customer Account:</span>
-                </span>
-                <button type="button" onclick="document.getElementById('email').value='aaris@ffpanel.com'; document.getElementById('password').value='UserPassword123!';" class="text-[11px] text-white bg-rose-600/80 hover:bg-rose-600 px-2 py-0.5 rounded font-semibold transition-colors">
-                    Auto-Fill Credentials
-                </button>
-            </div>
-            <div class="font-mono text-[11px] text-slate-300">
-                Email: <span class="text-white font-semibold">aaris@ffpanel.com</span> | Pass: <span class="text-white font-semibold">UserPassword123!</span>
-            </div>
-        </div>
-
         <!-- Error Alert -->
         <?php if ($error): ?>
             <div class="bg-rose-950/80 border border-rose-500/40 rounded-xl p-3.5 text-xs text-rose-300 flex items-center gap-2">
@@ -78,7 +63,7 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
                 <div>
                     <label for="email" class="block text-xs font-semibold text-slate-300 mb-1.5">Email Address</label>
-                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? 'aaris@ffpanel.com') ?>" required class="w-full bg-[#13192A] border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 transition-colors" placeholder="e.g. customer@example.com">
+                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required class="w-full bg-[#13192A] border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 transition-colors" placeholder="e.g. customer@example.com">
                 </div>
 
                 <div>

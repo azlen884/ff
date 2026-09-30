@@ -27,7 +27,10 @@ $settings = getSiteSettings();
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 99.9% Uptime
                         </span>
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
-                            ⚡ Instant UID Top-Up
+                            <svg class="w-3.5 h-3.5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            <span>Instant UID Top-Up</span>
                         </span>
                     </div>
                 </div>

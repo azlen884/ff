@@ -135,7 +135,7 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
                         <span class="text-slate-400">Player Free Fire UID:</span>
                         <span class="font-mono font-bold text-rose-400 flex items-center gap-2">
                             <span><?= htmlspecialchars($order['player_uid']) ?></span>
-                            <button type="button" onclick="navigator.clipboard.writeText('<?= htmlspecialchars($order['player_uid']) ?>'); alert('UID copied!');" class="text-[10px] bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 rounded text-white transition-colors">Copy</button>
+                            <button type="button" onclick="navigator.clipboard.writeText('<?= htmlspecialchars($order['player_uid']) ?>'); const self = this; self.innerText = 'Copied!'; showToast('UID copied to clipboard!'); setTimeout(() => self.innerText = 'Copy', 2000);" class="text-[10px] bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 rounded text-white transition-colors cursor-pointer">Copy</button>
                         </span>
                     </div>
                     <div class="flex items-center justify-between pb-2 border-b border-slate-800">

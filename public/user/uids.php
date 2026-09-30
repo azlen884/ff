@@ -91,7 +91,9 @@ require_once __DIR__ . '/../../includes/user_sidebar.php';
     <!-- Grid of Saved UIDs -->
     <?php if (empty($uids)): ?>
         <div class="bg-[#0D121F] border border-slate-800 rounded-2xl p-10 text-center text-slate-400">
-            <div class="w-12 h-12 mx-auto rounded-full bg-slate-800/80 flex items-center justify-center text-slate-500 mb-3 text-xl">🎮</div>
+            <div class="w-12 h-12 mx-auto rounded-full bg-slate-800/80 flex items-center justify-center text-rose-400 mb-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+            </div>
             <h4 class="text-base font-bold text-white mb-1">No Saved Free Fire UIDs</h4>
             <p class="text-xs">Add your first Free Fire UID below to enable instant top-up with zero typing.</p>
         </div>

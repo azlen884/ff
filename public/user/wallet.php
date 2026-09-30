@@ -34,47 +34,45 @@ $stats = $statStmt->fetch();
 $activeNav = 'wallet';
 $activeSidebar = 'wallet';
 require_once __DIR__ . '/../../includes/user_header.php';
+require_once __DIR__ . '/../../includes/user_sidebar.php';
 ?>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col lg:flex-row gap-8">
-        
-        <!-- Sidebar Navigation -->
-        <div class="w-full lg:w-64 shrink-0">
-            <?php require_once __DIR__ . '/../../includes/user_sidebar.php'; ?>
+<main class="flex-1 min-w-0 space-y-6">
+
+    <!-- Flash Message -->
+    <?php $flash = getFlash(); if ($flash): ?>
+        <div role="alert" class="p-4 rounded-2xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40' : ($flash['type'] === 'info' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-rose-950/80 text-rose-300 border border-rose-500/40') ?>">
+            <div class="flex items-center gap-2.5">
+                <?php if ($flash['type'] === 'success'): ?>
+                    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <?php elseif ($flash['type'] === 'info'): ?>
+                    <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <?php else: ?>
+                    <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <?php endif; ?>
+                <span><?= htmlspecialchars($flash['message']) ?></span>
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
         </div>
+    <?php endif; ?>
 
-        <!-- Main Content Area -->
-        <div class="flex-1 space-y-6">
+    <!-- Wallet Overview Hero Card -->
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#161D32] via-[#101526] to-[#0A0E18] border border-rose-500/25 p-6 sm:p-8 shadow-2xl shadow-rose-950/40">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-rose-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            <!-- Flash Message -->
-            <?php $flash = getFlash(); if ($flash): ?>
-                <div role="alert" class="p-4 rounded-2xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all <?= $flash['type'] === 'success' ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40' : ($flash['type'] === 'info' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-500/40' : 'bg-rose-950/80 text-rose-300 border border-rose-500/40') ?>">
-                    <div class="flex items-center gap-2.5">
-                        <span><?= $flash['type'] === 'success' ? '✅' : ($flash['type'] === 'info' ? 'ℹ️' : '⚠️') ?></span>
-                        <span><?= htmlspecialchars($flash['message']) ?></span>
-                    </div>
-                    <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">&times;</button>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-bold uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                    <span>Secure Wallet Balance</span>
                 </div>
-            <?php endif; ?>
-
-            <!-- Wallet Overview Hero Card -->
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#161D32] via-[#101526] to-[#0A0E18] border border-rose-500/25 p-6 sm:p-8 shadow-2xl shadow-rose-950/40">
-                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-rose-600/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div class="space-y-2">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
-                            <span>Verified MySQL Wallet</span>
-                        </div>
-                        <h1 class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Available Balance</h1>
-                        <div class="font-gaming text-4xl sm:text-5xl font-black text-white tracking-tight flex items-baseline gap-2">
-                            <span><?= formatCurrency((float)$currentUser['wallet_balance']) ?></span>
-                            <span class="text-xs font-normal text-slate-400 uppercase tracking-normal">INR Live</span>
-                        </div>
-                        <p class="text-xs text-slate-400">Use this balance for instant diamond top-ups without payment gateway friction.</p>
-                    </div>
+                <h1 class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Available Balance</h1>
+                <div class="font-gaming text-4xl sm:text-5xl font-black text-white tracking-tight flex items-baseline gap-2">
+                    <span><?= formatCurrency((float)$currentUser['wallet_balance']) ?></span>
+                    <span class="text-xs font-normal text-slate-400 uppercase tracking-normal">INR Live</span>
+                </div>
+                <p class="text-xs text-slate-400">Use this balance for instant diamond top-ups without payment gateway friction.</p>
+            </div>
 
                     <div class="flex flex-wrap items-center gap-3">
                         <a href="/deposit" class="inline-flex items-center gap-2 bg-[#FF2E51] hover:bg-rose-600 text-white font-bold text-xs px-6 py-3.5 rounded-xl shadow-xl shadow-rose-600/30 hover:shadow-rose-600/50 transition-all">
@@ -111,7 +109,7 @@ require_once __DIR__ . '/../../includes/user_header.php';
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800/80">
                     <div>
                         <h2 class="text-base font-bold text-white tracking-wide">Wallet Transaction History</h2>
-                        <p class="text-xs text-slate-400">All credit and debit records are immutable and stored in MySQL.</p>
+                        <p class="text-xs text-slate-400">All credit and debit records are securely logged and verified.</p>
                     </div>
 
                     <!-- Filter Tabs -->
@@ -124,8 +122,10 @@ require_once __DIR__ . '/../../includes/user_header.php';
 
                 <?php if (empty($transactions)): ?>
                     <div class="text-center py-12 space-y-3">
-                        <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-800 flex items-center justify-center text-slate-500 text-xl">
-                            💳
+                        <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-800/80 flex items-center justify-center text-slate-400">
+                            <svg class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                            </svg>
                         </div>
                         <h3 class="text-sm font-bold text-slate-300">No Transactions Found</h3>
                         <p class="text-xs text-slate-500 max-w-sm mx-auto">You have no wallet transactions matching this filter yet.</p>
@@ -184,9 +184,6 @@ require_once __DIR__ . '/../../includes/user_header.php';
 
             </div>
 
-        </div>
-
-    </div>
-</div>
+</main>
 
 <?php require_once __DIR__ . '/../../includes/user_footer.php'; ?>

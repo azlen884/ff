@@ -255,7 +255,9 @@ require_once __DIR__ . '/../includes/landing_header.php';
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="p-6 rounded-2xl bg-[#0D121F] border border-slate-800">
                 <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center mb-4">
-                    ⚡
+                    <svg class="w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                 </div>
                 <h4 class="text-sm font-bold text-white mb-1.5">Direct UID Top-Up</h4>
                 <p class="text-xs text-slate-400 leading-relaxed">
@@ -265,7 +267,9 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
             <div class="p-6 rounded-2xl bg-[#0D121F] border border-slate-800">
                 <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
-                    🛡️
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
                 </div>
                 <h4 class="text-sm font-bold text-white mb-1.5">Zero Ban Risk</h4>
                 <p class="text-xs text-slate-400 leading-relaxed">
@@ -275,7 +279,9 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
             <div class="p-6 rounded-2xl bg-[#0D121F] border border-slate-800">
                 <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4">
-                    💰
+                    <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
                 <h4 class="text-sm font-bold text-white mb-1.5">Unmatched Rates</h4>
                 <p class="text-xs text-slate-400 leading-relaxed">
@@ -285,7 +291,9 @@ require_once __DIR__ . '/../includes/landing_header.php';
 
             <div class="p-6 rounded-2xl bg-[#0D121F] border border-slate-800">
                 <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4">
-                    💬
+                    <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
                 </div>
                 <h4 class="text-sm font-bold text-white mb-1.5">24/7 Human Support</h4>
                 <p class="text-xs text-slate-400 leading-relaxed">

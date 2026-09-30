@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$k, $v]);
     }
 
-    setFlash('success', 'V2 configuration settings saved successfully to MySQL database.');
+    setFlash('success', 'Configuration settings saved successfully.');
     header('Location: /admin/settings');
     exit;
 }
@@ -81,7 +81,9 @@ require_once __DIR__ . '/../../includes/admin_header.php';
                     <!-- Section: Branding -->
                     <div class="space-y-4">
                         <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2 flex items-center gap-2">
-                            <span>🏷️</span>
+                            <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                            </svg>
                             <span>Store Branding & Public Presentation</span>
                         </h3>
 
@@ -111,7 +113,9 @@ require_once __DIR__ . '/../../includes/admin_header.php';
                     <!-- Section: User Dashboard Banners (2-3 Banners) -->
                     <div class="space-y-4 pt-2">
                         <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2 flex items-center gap-2">
-                            <span>🖼️</span>
+                            <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
                             <span>User Dashboard Banners (Carousel)</span>
                         </h3>
 
@@ -137,7 +141,9 @@ require_once __DIR__ . '/../../includes/admin_header.php';
                     <!-- Section: Order & Provider Automation -->
                     <div class="space-y-4 pt-2">
                         <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2 flex items-center gap-2">
-                            <span>⚡</span>
+                            <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
                             <span>Order Fulfillment & Provider Automation</span>
                         </h3>
 
@@ -170,7 +176,9 @@ require_once __DIR__ . '/../../includes/admin_header.php';
                     <!-- Section: Referral Program -->
                     <div class="space-y-4 pt-2">
                         <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2 flex items-center gap-2">
-                            <span>🎁</span>
+                            <svg class="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                            </svg>
                             <span>Referral Program & Affiliate Commissions</span>
                         </h3>
 
@@ -191,7 +199,9 @@ require_once __DIR__ . '/../../includes/admin_header.php';
                     <!-- Section: Support Channels -->
                     <div class="space-y-4 pt-2">
                         <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2 flex items-center gap-2">
-                            <span>📞</span>
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
                             <span>Customer Support Channels</span>
                         </h3>
 
